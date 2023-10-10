@@ -1,29 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="afe48f59-1e27-40c3-9ac8-aab3a1988017" name="Changes" comment="" />
+    <list default="true" id="afe48f59-1e27-40c3-9ac8-aab3a1988017" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Chess.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/AvailableSquaresToGoTo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Bishop.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/BlackPawn.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/BoardHistory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ChessBoard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Color_Black_Or_White.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/FollowBoard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/King.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Knight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ObjectPhotos/BlackBishop.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ObjectPhotos/BlackKing.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ObjectPhotos/BlackKnight.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ObjectPhotos/BlackPawn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ObjectPhotos/BlackQueen.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ObjectPhotos/BlackRook.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ObjectPhotos/WhiteBishop.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ObjectPhotos/WhiteKing.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ObjectPhotos/WhiteKnight.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ObjectPhotos/WhitePawn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ObjectPhotos/WhiteQueen.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ObjectPhotos/WhiteRook.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Queen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Rook.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Soldier.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/SoldiersNames.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Square.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TurnInformation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Utils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/WhitePawn.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Window.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="2UCP0uwE3e3HnpDxZvHtYnaPx6V" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/danie/Desktop/כל התכנותים/Task2&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\danie\Desktop\כל התכנותים\Chess\src" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -32,7 +101,66 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1692440371617</updated>
+      <workItem from="1692440372817" duration="920000" />
+      <workItem from="1692441308122" duration="1738000" />
+      <workItem from="1695847613804" duration="3159000" />
+      <workItem from="1695904276603" duration="409000" />
+      <workItem from="1695904758241" duration="1972000" />
+      <workItem from="1695922600335" duration="2837000" />
+      <workItem from="1695926227123" duration="32000" />
+      <workItem from="1696107882190" duration="1441000" />
+      <workItem from="1696109335391" duration="8262000" />
+      <workItem from="1696153991934" duration="6049000" />
+      <workItem from="1696167239983" duration="334000" />
+      <workItem from="1696184818787" duration="4669000" />
+      <workItem from="1696263658732" duration="3555000" />
+      <workItem from="1696270325715" duration="4800000" />
+      <workItem from="1696328130616" duration="3083000" />
+      <workItem from="1696344716476" duration="1841000" />
+      <workItem from="1696353639747" duration="1370000" />
+      <workItem from="1696451802735" duration="8116000" />
+      <workItem from="1696501277795" duration="13334000" />
+      <workItem from="1696542506147" duration="7432000" />
+      <workItem from="1696592648860" duration="10587000" />
+      <workItem from="1696603755998" duration="3870000" />
+      <workItem from="1696624071836" duration="5738000" />
+      <workItem from="1696708194492" duration="13394000" />
+      <workItem from="1696780233926" duration="7269000" />
+      <workItem from="1696844706487" duration="19311000" />
+      <workItem from="1696949214487" duration="5383000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/ChessBoard.java</url>
+          <line>282</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/ChessBoard.java</url>
+          <line>184</line>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/ChessBoard.java</url>
+          <line>173</line>
+          <properties class="ChessBoard" method="playTurn">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

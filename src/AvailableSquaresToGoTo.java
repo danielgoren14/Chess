@@ -1,2 +1,6 @@
-package PACKAGE_NAME;public interface AvailableSquaresToGoTo {
+import java.util.List;
+
+public interface AvailableSquaresToGoTo {
+    public List<Square> getAvailableSquaresToGoTo ();
+
 }

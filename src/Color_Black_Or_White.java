@@ -1,2 +1,4 @@
-package PACKAGE_NAME;public enum Color_Balck_Or_White {
+public enum Color_Black_Or_White {
+    WHITE, BLACK
+
 }
