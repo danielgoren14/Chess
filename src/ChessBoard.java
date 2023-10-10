@@ -188,10 +188,16 @@ public class ChessBoard extends JPanel {
                     if (currentSquare.getRow() == this.lastSoldier.getSquare().getRow() && currentSquare.getColumn() == this.lastSoldier.getSquare().getColumn() + 2) {
                         availableSquares.add(castlingSquare);
                         this.doSmallCastling(availableSquares);
+                        if (lastSoldier.getSoldierColor().equals(Color_Black_Or_White.WHITE)) {
+                            this.isWhiteKingAlreadyMoved = true;
+                        } else {
+                            this.isBlackKingAlreadyMoved = true;
+                        }
                         toContinue = false;
                         lastSoldier = null;
                     }
                 }
+
             }
 //            }
             if (availableSquares != null) {
@@ -240,11 +246,19 @@ public class ChessBoard extends JPanel {
                         lastSoldier.getSquare().setColumn(column);
                         followBoard.setSoldiers(lastSoldier, currentSquare.getRow(), currentSquare.getColumn());
                         this.passOnAllTheSquaresAndLighteningOrReturnThemBack(availableSquares, false);
+                        if (this.lastSoldier.getName().equals(SoldiersNames.WHITE_KING) || this.lastSoldier.getName().equals(SoldiersNames.BLACK_KING)) {
+                            if (this.lastSoldier.getSoldierColor().equals(Color_Black_Or_White.BLACK)) {
+                                this.isBlackKingAlreadyMoved = true;
+                            } else {
+                                this.isWhiteKingAlreadyMoved = true;
+                            }
+                        }
                         lastSoldier = null;
                         this.soldierClickedOnce = false;
                         if (castlingSquare != null) {
                             this.returnTheColorBack(this.chessBoard[castlingSquare.getRow()][castlingSquare.getColumn()]);
                         }
+
 //                    }
 //                    }
                     } else {
@@ -316,11 +330,9 @@ public class ChessBoard extends JPanel {
             this.chessBoard[row][column + 2].setIcon(BLACK_KING_ICON);
             this.chessBoard[row][column].setIcon(null);
             followBoard.setSoldiers(rook,row,column + 1);
-//            followBoard.setSoldiers(null,row,column + 3);
-            this.isBlackKingAlreadyMoved = true;
+//            this.isBlackKingAlreadyMoved = true;
         } else {
             this.isTurnOfWhite = false;
-//            Soldier whiteRook = followBoard.getSoldiers()[row][column + 3];
             this.chessBoard[row][column + 1].setIcon(WHITE_ROOK_ICON);
             this.chessBoard[row][column + 3].setIcon(null);
             this.chessBoard[row][column].setIcon(null);
@@ -328,7 +340,7 @@ public class ChessBoard extends JPanel {
             this.chessBoard[row][column].setIcon(null);
             followBoard.setSoldiers(rook,row,column + 1);
 
-            this.isWhiteKingAlreadyMoved = true;
+//            this.isWhiteKingAlreadyMoved = true;
         }
         followBoard.setSoldiers(null,row,column + 3);
         this.returnTheColorBack(this.chessBoard[row][column]);
@@ -470,21 +482,22 @@ public class ChessBoard extends JPanel {
             colorBlackOrWhite = Color_Black_Or_White.WHITE;
         }
 
-
-        if ((!isWhiteKingAlreadyMoved && colorBlackOrWhite.equals(Color_Black_Or_White.WHITE)) ||
-                (!isBlackKingAlreadyMoved && colorBlackOrWhite.equals(Color_Black_Or_White.BLACK))) {
-            int row = king.getSquare().getRow();
-            int column = king.getSquare().getColumn();
-            if (followBoard.getSoldiers()[row][column + 1] == null) {
-                if (followBoard.getSoldiers()[row][column + 2] == null) {
-                    if (followBoard.getSoldiers()[row][column + 3] != null) {
-                        if (colorBlackOrWhite.equals(Color_Black_Or_White.WHITE)) {
-                            if (followBoard.getSoldiers()[row][column + 3].getName().equals(SoldiersNames.WHITE_ROOK)) {
-                                result = true;
-                            }
-                        } else {
-                            if (followBoard.getSoldiers()[row][column + 3].getName().equals(SoldiersNames.BLACK_ROOK)) {
-                                result = true;
+        if (king.getName().equals(SoldiersNames.BLACK_KING) || king.getName().equals(SoldiersNames.WHITE_KING)) {
+            if ((!isWhiteKingAlreadyMoved && colorBlackOrWhite.equals(Color_Black_Or_White.WHITE)) ||
+                    (!isBlackKingAlreadyMoved && colorBlackOrWhite.equals(Color_Black_Or_White.BLACK))) {
+                int row = king.getSquare().getRow();
+                int column = king.getSquare().getColumn();
+                if (followBoard.getSoldiers()[row][column + 1] == null) {
+                    if (followBoard.getSoldiers()[row][column + 2] == null) {
+                        if (followBoard.getSoldiers()[row][column + 3] != null) {
+                            if (colorBlackOrWhite.equals(Color_Black_Or_White.WHITE)) {
+                                if (followBoard.getSoldiers()[row][column + 3].getName().equals(SoldiersNames.WHITE_ROOK)) {
+                                    result = true;
+                                }
+                            } else {
+                                if (followBoard.getSoldiers()[row][column + 3].getName().equals(SoldiersNames.BLACK_ROOK)) {
+                                    result = true;
+                                }
                             }
                         }
                     }
