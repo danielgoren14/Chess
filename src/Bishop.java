@@ -93,10 +93,6 @@ public class Bishop extends Soldier implements AvailableSquaresToGoTo{
                 }
             }
             this.addASquare(squares,row,column,this);
-//            Square square = canEatSoldier(currentSquare, this.color);
-//            if (square != null) {
-//                squares.add(square);
-//            }
         }
 
         return squares;

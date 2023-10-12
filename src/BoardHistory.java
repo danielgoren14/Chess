@@ -8,6 +8,10 @@ public class BoardHistory {
 //        this.history = this.addTurnInformationToHistory(turnInformation);
     }
 
+    public TurnInformation getTurnInformationInASpecificPlace (int index) {
+        return this.history[index];
+    }
+
     public void addTurnInformationToHistory(TurnInformation turnInformation) {
         TurnInformation[] temp = new TurnInformation[this.history.length + 1];
         if (this.history.length > 0) {
@@ -27,10 +31,26 @@ public class BoardHistory {
 
     @Override
     public String toString() {
-        return "BoardHistory{" +
-                "history=" + Arrays.toString(history) +
-                '}';
+        String  result = "BoardHistory{"+
+                "history=";
+        for (int i = 0; i < this.history.length; i++) {
+            result += getToStringAccordingly(this.history[i]);
+        }
+        result += '}';
+        return result;
     }
+
+    public String getToStringAccordingly (TurnInformation currentTurnInformation) {
+        String result = "";
+        if (currentTurnInformation.isCastlingHappened()) {
+            result += currentTurnInformation.toStringOfCastling();
+        } else {
+            result += currentTurnInformation.toString();
+        }
+        return result;
+    }
+
+
     //    public void addTurn(TurnInformation turnInformation) {
 ////        Soldier eatedSoldier = null;
 ////        if (FollowBoard.getSoldiers()[squareSoldierMovedTo.getRow()][squareSoldierMovedTo.getColumn()] != null) {

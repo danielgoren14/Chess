@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class ChessBoard extends JPanel {
+    private Square currentBeatingSquare;
+    private boolean leftRookMoved;
+    private boolean rightRookMoved;
     private boolean isWhiteKingAlreadyMoved;
     private boolean isBlackKingAlreadyMoved;
     private BoardHistory boardHistory;
@@ -28,6 +31,9 @@ public class ChessBoard extends JPanel {
     private JButton[][] chessBoard = new JButton[8][8];
 
     public ChessBoard() {
+        this.currentBeatingSquare = null;
+        this.rightRookMoved = false;
+        this.leftRookMoved = false;
         this.isWhiteKingAlreadyMoved = false;
         this.isBlackKingAlreadyMoved = false;
         this.boardHistory = new BoardHistory();
@@ -89,21 +95,14 @@ public class ChessBoard extends JPanel {
                 int column = j;
                 chessBoard[row][column].addActionListener((event) -> {
                     Square currentSquare = new Square(row, column);
-                    this.playTurn(currentSquare, row,column);
+                    this.playTurn(currentSquare);
                 });
             }
         }
     }
 
 
-
-    public void beating () {
-//        TurnInformation lastTurn = new TurnInformation();
-
-
-    }
-
-    public Square isTrackLeftUp (King king) {
+    public Square isTrackLeftUp(King king) {
         Square result = null;
         int row = king.getSquare().getRow() - 1;
         int column = king.getSquare().getColumn() - 1;
@@ -114,8 +113,8 @@ public class ChessBoard extends JPanel {
                 break;
             }
             if (row > 0 && column > 0) {
-                row --;
-                column --;
+                row--;
+                column--;
             } else {
                 break;
             }
@@ -123,38 +122,67 @@ public class ChessBoard extends JPanel {
         if (currentSoldier != null) {
             SoldiersNames soldiersNames = followBoard.getSoldiers()[row][column].getName();
             if (soldiersNames.equals(SoldiersNames.BLACK_KING) || soldiersNames.equals(SoldiersNames.WHITE_KING)) {
-                result = new Square(row,column);
+                result = new Square(row, column);
             }
         }
         return result;
     }
 
-    private List<Square> getTrackOfLeftUp (King king, Soldier soldier) {
-        List<Square> result = new ArrayList<>();
-        int row = soldier.getSquare().getRow() - 1;
-        int column = soldier.getSquare().getColumn() - 1;
-        Square square = new Square(king.getSquare().getRow(), king.getSquare().getColumn());
-//        Square square = this.isTrackLeftUp(soldier);
-        if (followBoard.getSoldiers()[row][column] != null) {
-            int rowSquare = square.getRow();
-            int columnSquare = square.getColumn();
 
-            while ((row >= 0 && column >= 0) || (rowSquare == row && columnSquare == column)) {
-                Square currentSquare = new Square(row, column);
-                result.add(currentSquare);
-                if (row > 0 && column > 0) {
-                    row--;
-                    column--;
-                } else {
-                    break;
+//    public List<Square> getALlPossibleThreateningSoldiers () {
+////        this.getSoldierThreateningOnKingFromLeftUp();
+//
+//
+//    }
+
+
+    public Square getBlackKingSquareInFollowBoard () {
+        Square result = null;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (followBoard.getSoldiers()[i][j] != null) {
+                    if (followBoard.getSoldiers()[i][j].getName().equals(SoldiersNames.BLACK_KING)) {
+                        result = new Square(followBoard.getSoldiers()[i][j].getSquare().getRow(), followBoard.getSoldiers()[i][j].getSquare().getRow());
+                    }
                 }
             }
         }
-        result.removeAll(Collections.singleton(null));
+        return result;
+    }
+    public Square getWhiteKingInFollowBoard () {
+        Square result = null;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (followBoard.getSoldiers()[i][j] != null) {
+                    if (followBoard.getSoldiers()[i][j].getName().equals(SoldiersNames.WHITE_KING)) {
+                        result = new Square(followBoard.getSoldiers()[i][j].getSquare().getRow(), followBoard.getSoldiers()[i][j].getSquare().getRow());
+                    }
+                }
+            }
+        }
         return result;
     }
 
-    public List<Square> getTrackOfSSquaresOfThreateningOpponentSoldierOnKing (Soldier soldier) {
+    private Soldier getSoldierThreateningOnKingFromLeftUp (Soldier soldier) {
+        Soldier result = null;
+        int row = soldier.getSquare().getRow() - 1;
+        int column = soldier.getSquare().getColumn() - 1;
+        Square square = new Square(row, column);
+        while (followBoard.getSoldiers()[row][column] != null) {
+            if (row > 0 && column > 0) {
+                row--;
+                column--;
+            } else {
+                break;
+            }
+        }
+        if (followBoard.getSoldiers()[row][column] != null) {
+            result = followBoard.getSoldiers()[row][column];
+        }
+        return result;
+    }
+
+    public List<Square> getTrackOfSSquaresOfThreateningOpponentSoldierOnKing(Soldier soldier) {
         List<Square> result = new ArrayList<>();
         Square square = new Square(soldier.getSquare().getRow(), soldier.getSquare().getColumn());
         SoldiersNames soldierName = soldier.getName();
@@ -171,18 +199,30 @@ public class ChessBoard extends JPanel {
         return result;
     }
 
-    private void playTurn (Square currentSquare, int row, int column) {
-        Soldier currentClickedSoldier = null;
-        if (followBoard.getSoldiers()[currentSquare.getRow()][currentSquare.getColumn()] != null) {
-            currentClickedSoldier = followBoard.getSoldiers()[currentSquare.getRow()][currentSquare.getColumn()];
-        }
 
+    private void playTurn (Square currentSquare) {
+        Soldier currentClickedSoldier_IfSoldierExists = null;
+        if (followBoard.getSoldiers()[currentSquare.getRow()][currentSquare.getColumn()] != null) {
+            currentClickedSoldier_IfSoldierExists = followBoard.getSoldiers()[currentSquare.getRow()][currentSquare.getColumn()];
+        }
         if (this.soldierClickedOnce) {
             Square castlingSquare = null;
             boolean toContinue = true;
             List<Square> availableSquares = Soldier.filterNullSquares(lastSoldier.getAvailableSquaresToGoTo());
-
-            if (currentClickedSoldier == null) {
+            Square squareOfEatingKing_ToRemoveIt = null;
+            for (Square square : availableSquares) {
+                if (followBoard.getSoldiers()[square.getRow()][square.getColumn()] != null) {
+                    if (followBoard.getSoldiers()[square.getRow()][square.getColumn()].getName().equals(SoldiersNames.WHITE_KING)
+                            || followBoard.getSoldiers()[square.getRow()][square.getColumn()].getName().equals(SoldiersNames.BLACK_KING)) {
+                        squareOfEatingKing_ToRemoveIt = new Square(square.getRow(), square.getColumn());
+                        break;
+                    }
+                }
+            }
+            if (squareOfEatingKing_ToRemoveIt != null) {
+                availableSquares.remove(squareOfEatingKing_ToRemoveIt);
+            }
+            if (currentClickedSoldier_IfSoldierExists == null) {
                 if (this.canDoSmallCastling(this.lastSoldier)) {
                     castlingSquare = new Square(this.lastSoldier.getSquare().getRow(), this.lastSoldier.getSquare().getColumn() + 2);
                     if (currentSquare.getRow() == this.lastSoldier.getSquare().getRow() && currentSquare.getColumn() == this.lastSoldier.getSquare().getColumn() + 2) {
@@ -194,42 +234,91 @@ public class ChessBoard extends JPanel {
                             this.isBlackKingAlreadyMoved = true;
                         }
                         toContinue = false;
-                        lastSoldier = null;
                     }
+                }
+                if (this.canDoBigCastling(this.lastSoldier)) {
+                    castlingSquare = new Square(this.lastSoldier.getSquare().getRow(), this.lastSoldier.getSquare().getColumn() - 2);
+                    if (currentSquare.getRow() == this.lastSoldier.getSquare().getRow() && currentSquare.getColumn() == this.lastSoldier.getSquare().getColumn() - 2) {
+                        availableSquares.add(castlingSquare);
+                        this.doBigCastling(availableSquares);
+                        if (lastSoldier.getSoldierColor().equals(Color_Black_Or_White.WHITE)) {
+                            this.isWhiteKingAlreadyMoved = true;
+                        } else {
+                            this.isBlackKingAlreadyMoved = true;
+                        }
+                        toContinue = false;
+                    }
+                }
+                if (this.currentBeatingSquare != null) {
+                    if (currentSquare.getRow() == this.currentBeatingSquare.getRow()
+                            && currentSquare.getColumn() == this.currentBeatingSquare.getColumn()) {
+//                        TurnInformation currentTurnInformation = new TurnInformation(this.lastSoldier,currentSquare);
+//                        this.boardHistory.addTurnInformationToHistory(currentTurnInformation);
+//                        Soldier pawn;
+                        if (this.lastSoldier.getSoldierColor().equals(Color_Black_Or_White.WHITE)) {
+                            this.chessBoard[this.currentBeatingSquare.getRow()][this.currentBeatingSquare.getColumn()].setIcon(WHITE_PAWN_ICON);
+//                            pawn = new WhitePawn(new Square(currentBeatingSquare.getRow(),currentSquare.getColumn()),SoldiersNames.WHITE_PAWN);
+                        } else {
+                            this.chessBoard[this.currentBeatingSquare.getRow()][this.currentBeatingSquare.getColumn()].setIcon(BLACK_PAWN_ICON);
+//                            pawn = new BlackPawn(new Square(currentBeatingSquare.getRow(),currentSquare.getColumn()),SoldiersNames.BLACK_PAWN);
+                        }
+
+                        this.returnTheColorBack(this.chessBoard[currentSquare.getRow()][currentSquare.getColumn()]);
+                        this.returnTheColorBack(this.chessBoard[this.lastSoldier.getSquare().getRow()][this.lastSoldier.getSquare().getColumn()]);
+                        this.chessBoard[this.lastSoldier.getSquare().getRow()][this.lastSoldier.getSquare().getColumn()].setIcon(null);
+
+                        if (currentSquare.getColumn() == this.lastSoldier.getSquare().getColumn() - 1) {
+
+                            this.chessBoard[lastSoldier.getSquare().getRow()][lastSoldier.getSquare().getColumn() - 1].setIcon(null);
+                            followBoard.setSoldiers(null,lastSoldier.getSquare().getRow(),lastSoldier.getSquare().getColumn() - 1);
+                        } else {
+                            this.chessBoard[lastSoldier.getSquare().getRow()][lastSoldier.getSquare().getColumn() + 1].setIcon(null);
+                            followBoard.setSoldiers(null,lastSoldier.getSquare().getRow(),lastSoldier.getSquare().getColumn() + 1);
+                        }
+                        Soldier soldier = followBoard.getSoldiers()[this.lastSoldier.getSquare().getRow()][this.lastSoldier.getSquare().getColumn()];
+                        this.lastSoldier.getSquare().setColumn(currentSquare.getColumn());
+                        followBoard.setSoldiers(lastSoldier,currentSquare.getRow(),currentSquare.getColumn());
+                        followBoard.setSoldiers(null,soldier.getSquare().getRow(),soldier.getSquare().getColumn());
+                        toContinue = false;
+                        this.passOnAllTheSquaresAndLighteningOrReturnThemBack(availableSquares,false);
+                        this.soldierClickedOnce = false;
+                        this.lastSoldier = null;
+                    }
+                }
+            }
+            if (availableSquares.size() > 0) {
+                Color_Black_Or_White colorBlackOrWhite = Color_Black_Or_White.WHITE;
+                if (currentClickedSoldier_IfSoldierExists != null) {
+//                    if (lastSoldier.getName().equals(SoldiersNames.BLACK_ROOK) || lastSoldier.getName().equals(SoldiersNames.WHITE_ROOK)
+//                            || lastSoldier.getName().equals(SoldiersNames.BLACK_BISHOP) || lastSoldier.getName().equals(SoldiersNames.WHITE_BISHOP) ||
+//                            lastSoldier.getName().equals(SoldiersNames.BLACK_QUEEN) || lastSoldier.getName().equals(SoldiersNames.WHITE_QUEEN)) {
+//                        if (lastSoldier.getSoldierColor().equals(Color_Black_Or_White.BLACK)) {
+//                            colorBlackOrWhite = Color_Black_Or_White.BLACK;
+//                        }
+//                        List<Square> temp = new ArrayList<>();
+//                        for (Square square : availableSquares) {
+////                            if (!this.isFromTheSameColor(colorBlackOrWhite, followBoard.getSoldiers()[currentSquare.getRow()][currentSquare.getColumn()])) {
+//                            if (!this.isFromTheSameColor(colorBlackOrWhite,this.lastSoldier)) {
+//                                temp.add(square);
+//                            }
+//                        }
+//                        if (temp.size() > 0) {
+//                            availableSquares.removeAll(temp);
+//                        }
+//                    }
                 }
 
-            }
-//            }
-            if (availableSquares != null) {
-                Square squareToMoveTheSoldierTo_TheUserClicksOn = null;
-                Color_Black_Or_White colorBlackOrWhite = Color_Black_Or_White.WHITE;
-                if (currentClickedSoldier != null) {
-                    if (currentClickedSoldier.getName().equals(SoldiersNames.BLACK_ROOK) || currentClickedSoldier.getName().equals(SoldiersNames.WHITE_ROOK)
-                            || currentClickedSoldier.getName().equals(SoldiersNames.BLACK_BISHOP) || currentClickedSoldier.getName().equals(SoldiersNames.WHITE_BISHOP) ||
-                            currentClickedSoldier.getName().equals(SoldiersNames.BLACK_QUEEN) || currentClickedSoldier.getName().equals(SoldiersNames.WHITE_QUEEN)) {
-                        if (lastSoldier.getSoldierColor().equals(Color_Black_Or_White.BLACK)) {
-                            colorBlackOrWhite = Color_Black_Or_White.BLACK;
-                        }
-                        List<Square> temp = new ArrayList<>();
-                        for (Square square : availableSquares) {
-                            if (!this.isFromTheSameColor(colorBlackOrWhite, lastSoldier)) {
-                                temp.add(square);
-                            }
-                        }
-                        if (temp.size() > 0) {
-                            availableSquares.removeAll(temp);
-                        }
-                    }
-                }
+                boolean isSquareToMoveTheSoldierTo_TheUserClicksOn = false;
+
                 for (Square square : availableSquares) {
                     if (square.getRow() == currentSquare.getRow() &&
                             square.getColumn() == currentSquare.getColumn()) {
-                        squareToMoveTheSoldierTo_TheUserClicksOn = new Square(row, column);
+                        isSquareToMoveTheSoldierTo_TheUserClicksOn = true;
                         break;
                     }
                 }
                 if (toContinue) {
-                    if (squareToMoveTheSoldierTo_TheUserClicksOn != null) {
+                    if (isSquareToMoveTheSoldierTo_TheUserClicksOn) {
                         TurnInformation turnInformation = new TurnInformation(this.lastSoldier, currentSquare);
                         System.out.println(turnInformation.toString());
                         this.boardHistory.addTurnInformationToHistory(turnInformation);
@@ -242,9 +331,11 @@ public class ChessBoard extends JPanel {
                         chessBoard[lastSoldier.getSquare().getRow()][lastSoldier.getSquare().getColumn()].setIcon(null);
                         followBoard.setSoldiers(null, lastSoldier.getSquare().getRow(), lastSoldier.getSquare().getColumn());
                         returnTheColorBack(chessBoard[lastSoldier.getSquare().getRow()][lastSoldier.getSquare().getColumn()]);
-                        lastSoldier.getSquare().setRow(row);
-                        lastSoldier.getSquare().setColumn(column);
+                        lastSoldier.getSquare().setRow(currentSquare.getRow());
+                        lastSoldier.getSquare().setColumn(currentSquare.getColumn());
                         followBoard.setSoldiers(lastSoldier, currentSquare.getRow(), currentSquare.getColumn());
+                        System.out.println(followBoard.getSoldiers()[currentSquare.getRow()][currentSquare.getColumn()]);
+                        System.out.println(followBoard.getSoldiers()[lastSoldier.getSquare().getRow()][lastSoldier.getSquare().getColumn()]);
                         this.passOnAllTheSquaresAndLighteningOrReturnThemBack(availableSquares, false);
                         if (this.lastSoldier.getName().equals(SoldiersNames.WHITE_KING) || this.lastSoldier.getName().equals(SoldiersNames.BLACK_KING)) {
                             if (this.lastSoldier.getSoldierColor().equals(Color_Black_Or_White.BLACK)) {
@@ -253,60 +344,251 @@ public class ChessBoard extends JPanel {
                                 this.isWhiteKingAlreadyMoved = true;
                             }
                         }
-                        lastSoldier = null;
-                        this.soldierClickedOnce = false;
                         if (castlingSquare != null) {
                             this.returnTheColorBack(this.chessBoard[castlingSquare.getRow()][castlingSquare.getColumn()]);
                         }
-
-//                    }
-//                    }
+                        lastSoldier = null;
+                        this.currentBeatingSquare = null;
+                        this.soldierClickedOnce = false;
                     } else {
                         this.returnTheColorBack(this.chessBoard[currentSquare.getRow()][currentSquare.getColumn()]);
-
                         clickOnEmptySquareAfterClickingOnASoldier(availableSquares);
                     }
+                } else {
+                    this.lastSoldier = null;
                 }
             } else {
                 this.returnTheColorBack(this.chessBoard[currentSquare.getRow()][currentSquare.getColumn()]);
             }
         } else {
-            if (currentClickedSoldier != null) {
-                if ((isTurnOfWhite && currentClickedSoldier.getSoldierColor().equals(Color_Black_Or_White.WHITE) ||
-                        (!this.isTurnOfWhite && currentClickedSoldier.getSoldierColor().equals(Color_Black_Or_White.BLACK)))) {
-
-                    List<Square> availableSquares = Soldier.filterNullSquares(currentClickedSoldier.getAvailableSquaresToGoTo());
-//                    if (currentClickedSoldier.getName().equals(SoldiersNames.WHITE_KING) || currentClickedSoldier.getName().equals(SoldiersNames.BLACK_KING)) {
-                    if (this.canDoSmallCastling(currentClickedSoldier)) {
-                        Square castlingSquare = new Square(currentSquare.getRow(),currentSquare.getColumn() + 2);
-                        availableSquares.add(castlingSquare);
+            if (currentClickedSoldier_IfSoldierExists != null) {
+                if ((isTurnOfWhite && currentClickedSoldier_IfSoldierExists.getSoldierColor().equals(Color_Black_Or_White.WHITE) ||
+                        (!this.isTurnOfWhite && currentClickedSoldier_IfSoldierExists.getSoldierColor().equals(Color_Black_Or_White.BLACK)))) {
+                    List<Square> availableSquares = Soldier.filterNullSquares(currentClickedSoldier_IfSoldierExists.getAvailableSquaresToGoTo());
+                    if (this.canDoSmallCastling(currentClickedSoldier_IfSoldierExists)) {
+                        Square smallCastlingSquare = new Square(currentSquare.getRow(),currentSquare.getColumn() + 2);
+                        availableSquares.add(smallCastlingSquare);
                     }
-
+                    if (this.canDoBigCastling(currentClickedSoldier_IfSoldierExists)) {
+                        Square bigCastlingSquare = new Square(currentSquare.getRow(),currentSquare.getColumn() - 2);
+                        availableSquares.add(bigCastlingSquare);
+                    }
                     this.soldierClickedOnce = true;
-                    this.lastSoldier = currentClickedSoldier;
-                    if (currentClickedSoldier.getSoldierColor().equals(Color_Black_Or_White.WHITE)) {
+
+                    if (currentClickedSoldier_IfSoldierExists.getSoldierColor().equals(Color_Black_Or_White.WHITE)) {
                         isTurnOfWhite = false;
                     } else {
                         isTurnOfWhite = true;
                     }
-                    System.out.println(currentClickedSoldier);
-
-
+                    System.out.println(currentClickedSoldier_IfSoldierExists);
+                    this.lastSoldier = currentClickedSoldier_IfSoldierExists;
+                    this.currentBeatingSquare = this.getBeatingSquare(currentClickedSoldier_IfSoldierExists);
+                    if (this.currentBeatingSquare != null) {
+                        availableSquares.add(this.currentBeatingSquare);
+                    }
                     if (availableSquares != null) {
                         System.out.println(availableSquares.toString());
                         this.passOnAllTheSquaresAndLighteningOrReturnThemBack(availableSquares, true);
-                        this.intensifyColorOfButton(this.chessBoard[row][column]);
+                        this.intensifyColorOfButton(this.chessBoard[currentSquare.getRow()][currentSquare.getColumn()]);
                     } else {
                         this.soldierClickedOnce = false;
                         this.lastSoldier = null;
                     }
                 } else {
-                    System.out.println(currentClickedSoldier.getSoldierColor().toString());
+                    System.out.println(currentClickedSoldier_IfSoldierExists.getSoldierColor().toString());
                 }
             } else {
                 System.out.println("null");
             }
         }
+    }
+
+
+    private void makeHistory(Square squareTheSoldierMovesTo) {
+        TurnInformation turnInformation = new TurnInformation(this.lastSoldier, squareTheSoldierMovesTo);
+        if ((turnInformation.isBigCastlingForBlack() || turnInformation.isSmallCastlingForBlack())
+                && this.lastSoldier.getSoldierColor().equals(Color_Black_Or_White.BLACK)) {
+            System.out.println(turnInformation.toStringOfCastling());
+        } else if ((turnInformation.isBigCastlingForWhite() || turnInformation.isSmallCastlingForWhite())
+                && this.lastSoldier.getSoldierColor().equals(Color_Black_Or_White.WHITE)) {
+            System.out.println(turnInformation.toStringOfCastling());
+        } else {
+            System.out.println(turnInformation.toString());
+        }
+        this.boardHistory.addTurnInformationToHistory(turnInformation);
+        System.out.println(this.boardHistory.getHistory().length);
+        System.out.println(this.boardHistory.toString());
+
+
+    }
+
+    private void doBigCastling(List<Square> squaresToReturnTheirColorBack) {
+        Color_Black_Or_White colorBlackOrWhite = Color_Black_Or_White.WHITE;
+        if (lastSoldier.getSoldierColor().equals(Color_Black_Or_White.BLACK)) {
+            colorBlackOrWhite = Color_Black_Or_White.BLACK;
+        }
+        int row = lastSoldier.getSquare().getRow();
+        int column = lastSoldier.getSquare().getColumn();
+        Soldier rook = followBoard.getSoldiers()[row][column - 4];
+        this.lastSoldier.getSquare().setRow(row);
+        this.lastSoldier.getSquare().setColumn(column - 2);
+        rook.getSquare().setRow(row);
+        rook.getSquare().setColumn(column - 1);
+        if (colorBlackOrWhite.equals(Color_Black_Or_White.BLACK)) {
+            this.isTurnOfWhite = true;
+            this.chessBoard[row][column - 1].setIcon(BLACK_ROOK_ICON);
+            this.chessBoard[row][column - 2].setIcon(BLACK_KING_ICON);
+        } else {
+            this.isTurnOfWhite = false;
+            this.chessBoard[row][column - 1].setIcon(WHITE_ROOK_ICON);
+            this.chessBoard[row][column - 2].setIcon(WHITE_KING_ICON);
+        }
+        this.chessBoard[row][column - 4].setIcon(null);
+        this.chessBoard[row][column].setIcon(null);
+        followBoard.setSoldiers(rook, row, column - 1);
+        followBoard.setSoldiers(null, row, column - 4);
+        this.returnTheColorBack(this.chessBoard[row][column]);
+        this.passOnAllTheSquaresAndLighteningOrReturnThemBack(squaresToReturnTheirColorBack, false);
+        followBoard.setSoldiers(lastSoldier, row, column - 2);
+        followBoard.setSoldiers(null, row, column);
+
+        this.soldierClickedOnce = false;
+    }
+
+    private boolean canDoBigCastling(Soldier king) {
+        boolean result = false;
+        Color_Black_Or_White colorBlackOrWhite = Color_Black_Or_White.BLACK;
+        if (king.getSoldierColor().equals(Color_Black_Or_White.WHITE)) {
+            colorBlackOrWhite = Color_Black_Or_White.WHITE;
+        }
+
+        if (king.getName().equals(SoldiersNames.BLACK_KING) || king.getName().equals(SoldiersNames.WHITE_KING)) {
+            if ((!isWhiteKingAlreadyMoved && colorBlackOrWhite.equals(Color_Black_Or_White.WHITE)) ||
+                    (!isBlackKingAlreadyMoved && colorBlackOrWhite.equals(Color_Black_Or_White.BLACK))) {
+                int row = king.getSquare().getRow();
+                int column = king.getSquare().getColumn();
+                if (followBoard.getSoldiers()[row][column - 1] == null) {
+                    if (followBoard.getSoldiers()[row][column - 2] == null) {
+                        if (followBoard.getSoldiers()[row][column - 3] == null) {
+                            if (followBoard.getSoldiers()[row][column - 4] != null) {
+                                if (colorBlackOrWhite.equals(Color_Black_Or_White.WHITE)) {
+                                    if (followBoard.getSoldiers()[row][column - 4].getName().equals(SoldiersNames.WHITE_ROOK)) {
+                                        result = true;
+                                    }
+                                } else {
+                                    if (followBoard.getSoldiers()[row][column - 4].getName().equals(SoldiersNames.BLACK_ROOK)) {
+                                        result = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    public Square getBeatingSquare (Soldier currentSoldier) {
+        Square square = null;
+        if (this.boardHistory.getHistory().length > 0) {
+            TurnInformation lastTurnInformation = this.boardHistory.getTurnInformationInASpecificPlace(this.boardHistory.getHistory().length - 1);
+            if (canMakeBeatingForCurrentWhitePawnDoingThis(currentSoldier)) {
+                square = new Square(currentSoldier.getSquare().getRow() - 1, lastTurnInformation.getSquareTheSoldierMovesTo().getColumn());
+            }
+            if (canMakeBeatingForCurrentBlackPawnDoingThis(currentSoldier)) {
+                square = new Square(currentSoldier.getSquare().getRow() + 1, lastTurnInformation.getSquareTheSoldierMovesTo().getColumn());
+            }
+        }
+        return square;
+    }
+
+    public boolean canMakeBeatingForCurrentWhitePawnDoingThis (Soldier currentSoldier) {
+        boolean result = false;
+        TurnInformation lastTurnInformation = this.boardHistory.getTurnInformationInASpecificPlace(this.boardHistory.getHistory().length - 1);
+        if (!lastTurnInformation.isCastlingHappened()) {
+            if (!this.isTurnOfWhite && lastTurnInformation.getMovingSoldier().getName().equals(SoldiersNames.BLACK_PAWN)) {
+                if (currentSoldier.getName().equals(SoldiersNames.WHITE_PAWN)) {
+                    int whitePawnStartSquareRow = currentSoldier.getSquare().getRow();
+                    int whitePawnStartSquareColumn = currentSoldier.getSquare().getColumn();
+                    int blackPawnStartSquareBeforeOneTurnRow = lastTurnInformation.getSquareTheSoldierStartFrom().getRow();
+                    int blackPawnStartSquareBeforeOneTurnColumn = lastTurnInformation.getSquareTheSoldierStartFrom().getColumn();
+                    int blackPawnFinishSquareRow = lastTurnInformation.getSquareTheSoldierMovesTo().getRow();
+                    int blackPawnFinishSquareColumn = lastTurnInformation.getSquareTheSoldierMovesTo().getColumn();
+                    if (blackPawnStartSquareBeforeOneTurnRow == 1) {
+                        if (blackPawnFinishSquareRow == 3 && whitePawnStartSquareRow == 3) {
+                            if (whitePawnStartSquareColumn == blackPawnStartSquareBeforeOneTurnColumn + 1 || whitePawnStartSquareColumn == blackPawnStartSquareBeforeOneTurnColumn - 1) {
+//                                if (squareTheSoldierMovesTo.getRow() == 2 && squareTheSoldierMovesTo.getColumn() == blackPawnFinishSquareColumn) {
+
+                                result = true;
+//                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+        return result;
+    }
+
+
+
+    public boolean canMakeBeatingForCurrentBlackPawnDoingThis (Soldier currentBeatingSquare) {
+        boolean result = false;
+        TurnInformation lastTurnInformation = this.boardHistory.getTurnInformationInASpecificPlace(this.boardHistory.getHistory().length - 1);
+        if (this.isTurnOfWhite && lastTurnInformation.getMovingSoldier().getName().equals(SoldiersNames.WHITE_PAWN)) {
+            if (currentBeatingSquare.getName().equals(SoldiersNames.BLACK_PAWN)) {
+                int blackPawnStartSquareRow = currentBeatingSquare.getSquare().getRow();
+                int blackPawnStartSquareColumn = currentBeatingSquare.getSquare().getColumn();
+                int whitePawnStartSquareBeforeOneTurnRow = lastTurnInformation.getSquareTheSoldierStartFrom().getRow();
+                int whitePawnStartSquareBeforeOneTurnColumn = lastTurnInformation.getSquareTheSoldierStartFrom().getColumn();
+                int whitePawnFinishSquareRow = lastTurnInformation.getSquareTheSoldierMovesTo().getRow();
+                int whitePawnFinishSquareColumn = lastTurnInformation.getSquareTheSoldierMovesTo().getColumn();
+                if (whitePawnStartSquareBeforeOneTurnRow == 6) {
+                    if (whitePawnFinishSquareRow == 4 && blackPawnStartSquareRow == 4) {
+                        if (blackPawnStartSquareColumn == whitePawnStartSquareBeforeOneTurnColumn + 1 || blackPawnStartSquareColumn == whitePawnStartSquareBeforeOneTurnColumn - 1) {
+//                            if (squareTheSoldierMovesTo.getRow() == 3 && squareTheSoldierMovesTo.getColumn() == whitePawnFinishSquareColumn) {
+                            result = true;
+//                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    public boolean canDoSmallCastling (Soldier king) {
+        boolean result = false;
+        Color_Black_Or_White colorBlackOrWhite = Color_Black_Or_White.BLACK;
+        if (king.getSoldierColor().equals(Color_Black_Or_White.WHITE)) {
+            colorBlackOrWhite = Color_Black_Or_White.WHITE;
+        }
+
+        if (king.getName().equals(SoldiersNames.BLACK_KING) || king.getName().equals(SoldiersNames.WHITE_KING)) {
+            if ((!isWhiteKingAlreadyMoved && colorBlackOrWhite.equals(Color_Black_Or_White.WHITE)) ||
+                    (!isBlackKingAlreadyMoved && colorBlackOrWhite.equals(Color_Black_Or_White.BLACK))) {
+                int row = king.getSquare().getRow();
+                int column = king.getSquare().getColumn();
+                if (followBoard.getSoldiers()[row][column + 1] == null) {
+                    if (followBoard.getSoldiers()[row][column + 2] == null) {
+                        if (followBoard.getSoldiers()[row][column + 3] != null) {
+                            if (colorBlackOrWhite.equals(Color_Black_Or_White.WHITE)) {
+                                if (followBoard.getSoldiers()[row][column + 3].getName().equals(SoldiersNames.WHITE_ROOK)) {
+                                    result = true;
+                                }
+                            } else {
+                                if (followBoard.getSoldiers()[row][column + 3].getName().equals(SoldiersNames.BLACK_ROOK)) {
+                                    result = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     private void doSmallCastling (List<Square> squaresToReturnTheirColorBack) {
@@ -323,25 +605,16 @@ public class ChessBoard extends JPanel {
         rook.getSquare().setColumn(column + 1);
         if (colorBlackOrWhite.equals(Color_Black_Or_White.BLACK)) {
             this.isTurnOfWhite = true;
-//            Soldier blackRook = followBoard.getSoldiers()[row][column + 3];
             this.chessBoard[row][column + 1].setIcon(BLACK_ROOK_ICON);
-            this.chessBoard[row][column + 3].setIcon(null);
-            this.chessBoard[row][column].setIcon(null);
             this.chessBoard[row][column + 2].setIcon(BLACK_KING_ICON);
-            this.chessBoard[row][column].setIcon(null);
-            followBoard.setSoldiers(rook,row,column + 1);
-//            this.isBlackKingAlreadyMoved = true;
         } else {
             this.isTurnOfWhite = false;
             this.chessBoard[row][column + 1].setIcon(WHITE_ROOK_ICON);
-            this.chessBoard[row][column + 3].setIcon(null);
-            this.chessBoard[row][column].setIcon(null);
             this.chessBoard[row][column + 2].setIcon(WHITE_KING_ICON);
-            this.chessBoard[row][column].setIcon(null);
-            followBoard.setSoldiers(rook,row,column + 1);
-
-//            this.isWhiteKingAlreadyMoved = true;
         }
+        this.chessBoard[row][column + 3].setIcon(null);
+        this.chessBoard[row][column].setIcon(null);
+        followBoard.setSoldiers(rook,row,column + 1);
         followBoard.setSoldiers(null,row,column + 3);
         this.returnTheColorBack(this.chessBoard[row][column]);
         this.passOnAllTheSquaresAndLighteningOrReturnThemBack(squaresToReturnTheirColorBack, false);
@@ -355,7 +628,6 @@ public class ChessBoard extends JPanel {
     private void clickOnEmptySquareAfterClickingOnASoldier (List<Square> availableSquares) {
         returnTheColorBack(this.chessBoard[lastSoldier.getSquare().getRow()][lastSoldier.getSquare().getColumn()]);
         this.passOnAllTheSquaresAndLighteningOrReturnThemBack(availableSquares, false);
-//                    if (followBoard.getSoldiers()[row][column].getSoldierColor().equals(Color_Black_Or_White.WHITE)) {
         if (lastSoldier.getSoldierColor().equals(Color_Black_Or_White.WHITE)) {
             this.isTurnOfWhite = true;
         } else {
@@ -464,48 +736,8 @@ public class ChessBoard extends JPanel {
         return currentPossibleThreateningSoldiers;
     }
 
-//    public boolean isKingThreatened (Color_Black_Or_White colorBlackOrWhite) {
-//        boolean result = false;
-//        List<Soldier> soldiers = this.isKingAttacked_AndReturnAllTheOpponentSoldiers(colorBlackOrWhite);
-//        for (Soldier soldier : soldiers) {
-//            List<Square> availableSquares = this.chessBoard[soldier.getSquare().getRow()][soldier.getSquare().getColumn()]
-//        }
-//
-//        return result;
-//    }
 
 
-    public boolean canDoSmallCastling (Soldier king) {
-        boolean result = false;
-        Color_Black_Or_White colorBlackOrWhite = Color_Black_Or_White.BLACK;
-        if (king.getSoldierColor().equals(Color_Black_Or_White.WHITE)) {
-            colorBlackOrWhite = Color_Black_Or_White.WHITE;
-        }
-
-        if (king.getName().equals(SoldiersNames.BLACK_KING) || king.getName().equals(SoldiersNames.WHITE_KING)) {
-            if ((!isWhiteKingAlreadyMoved && colorBlackOrWhite.equals(Color_Black_Or_White.WHITE)) ||
-                    (!isBlackKingAlreadyMoved && colorBlackOrWhite.equals(Color_Black_Or_White.BLACK))) {
-                int row = king.getSquare().getRow();
-                int column = king.getSquare().getColumn();
-                if (followBoard.getSoldiers()[row][column + 1] == null) {
-                    if (followBoard.getSoldiers()[row][column + 2] == null) {
-                        if (followBoard.getSoldiers()[row][column + 3] != null) {
-                            if (colorBlackOrWhite.equals(Color_Black_Or_White.WHITE)) {
-                                if (followBoard.getSoldiers()[row][column + 3].getName().equals(SoldiersNames.WHITE_ROOK)) {
-                                    result = true;
-                                }
-                            } else {
-                                if (followBoard.getSoldiers()[row][column + 3].getName().equals(SoldiersNames.BLACK_ROOK)) {
-                                    result = true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return result;
-    }
 
 
     public void passOnAllTheSquaresAndLighteningOrReturnThemBack (List<Square> availableSquares, boolean lighten) {
