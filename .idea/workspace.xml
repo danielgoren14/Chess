@@ -95,7 +95,7 @@
       <workItem from="1697007826722" duration="14592000" />
       <workItem from="1697027146331" duration="6298000" />
       <workItem from="1697043274464" duration="7523000" />
-      <workItem from="1697082914113" duration="14214000" />
+      <workItem from="1697082914113" duration="15509000" />
     </task>
     <task id="LOCAL‎-00001" summary=".">
       <created>1696954812178</created>
@@ -125,7 +125,14 @@
       <option name="project" value="LOCAL‎" />
       <updated>1697114934577</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL‎-00005" summary=".">
+      <created>1697132840617</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL‎-00005" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1697132840617</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -188,15 +195,6 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="70" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/ChessBoard.java</url>
-          <line>748</line>
-          <properties class="ChessBoard" method="getCurrentThreateningByNavigation">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="72" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

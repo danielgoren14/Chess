@@ -389,16 +389,16 @@ public class ChessBoard extends JPanel {
                 this.returnTheColorBack(this.chessBoard[currentSquare.getRow()][currentSquare.getColumn()]);
             }
 
-            Soldier whiteKing = followBoard.getSoldiers()[searchForWhiteKingSquare().getRow()][searchForWhiteKingSquare().getColumn()];
-            List<Soldier> threateningSoldiers_OnWhiteKing = this.getThreateningSoldiers(whiteKing);
+//            Soldier whiteKing = followBoard.getSoldiers()[searchForWhiteKingSquare().getRow()][searchForWhiteKingSquare().getColumn()];
+            List<Soldier> threateningSoldiers_OnWhiteKing = this.getThreateningSoldiers(searchForWhiteKingSquare(),Color_Black_Or_White.WHITE);
 //            System.out.println(threateningSoldiers_OnWhiteKing);
             for (Soldier soldier : threateningSoldiers_OnWhiteKing) {
                 if (soldier != null) {
                     System.out.println(soldier.toString());
                 }
             }
-            Soldier blackKing = followBoard.getSoldiers()[searchForBlackKingSquare().getRow()][searchForBlackKingSquare().getColumn()];
-            List<Soldier> threateningSoldiers_OnBlackKing = this.getThreateningSoldiers(blackKing);
+//            Soldier blackKing = followBoard.getSoldiers()[searchForBlackKingSquare().getRow()][searchForBlackKingSquare().getColumn()];
+            List<Soldier> threateningSoldiers_OnBlackKing = this.getThreateningSoldiers(searchForBlackKingSquare(),Color_Black_Or_White.BLACK);
             for (Soldier soldier : threateningSoldiers_OnBlackKing) {
                 if (soldier != null) {
                     System.out.println(soldier.toString());
@@ -733,21 +733,22 @@ public class ChessBoard extends JPanel {
 //
 //    }
 
-    public List<Soldier> getThreateningSoldiers (Soldier king) {
+    public List<Soldier> getThreateningSoldiers (Square square, Color_Black_Or_White color_black_or_white) {
         List<Soldier> threateningSoldiers = new ArrayList<>();
-        threateningSoldiers.add(this.getCurrentThreateningByNavigation(king,1,0));
-        threateningSoldiers.add(this.getCurrentThreateningByNavigation(king,-1,0));
-        threateningSoldiers.add(this.getCurrentThreateningByNavigation(king,1,1));
-        threateningSoldiers.add(this.getCurrentThreateningByNavigation(king,-1,1));
-        threateningSoldiers.add(this.getCurrentThreateningByNavigation(king,0,1));
-        threateningSoldiers.add(this.getCurrentThreateningByNavigation(king,0,-1));
-        threateningSoldiers.add(this.getCurrentThreateningByNavigation(king,-1,-1));
-        threateningSoldiers.add(this.getCurrentThreateningByNavigation(king,1,-1));
+        threateningSoldiers.add(this.getCurrentThreateningByNavigation(square,color_black_or_white,1,0));
+        threateningSoldiers.add(this.getCurrentThreateningByNavigation(square,color_black_or_white,-1,0));
+        threateningSoldiers.add(this.getCurrentThreateningByNavigation(square,color_black_or_white,1,1));
+        threateningSoldiers.add(this.getCurrentThreateningByNavigation(square,color_black_or_white,-1,1));
+        threateningSoldiers.add(this.getCurrentThreateningByNavigation(square,color_black_or_white,0,1));
+        threateningSoldiers.add(this.getCurrentThreateningByNavigation(square,color_black_or_white,0,-1));
+        threateningSoldiers.add(this.getCurrentThreateningByNavigation(square,color_black_or_white,-1,-1));
+        threateningSoldiers.add(this.getCurrentThreateningByNavigation(square,color_black_or_white,1,-1));
         return threateningSoldiers;
     }
 
-    public Soldier getCurrentThreateningByNavigation(Soldier king, int vertical, int horizontal) {
+    public Soldier getCurrentThreateningByNavigation(Square square, Color_Black_Or_White color_black_or_white, int vertical, int horizontal) {
         Soldier soldier = null;
+        Soldier king = followBoard.getSoldiers()[square.getRow()][square.getColumn()];
         int row = king.getSquare().getRow() + horizontal;
         int column = king.getSquare().getColumn() + vertical;
         if (row >= 0 && row <= 7 && column >= 0 && column <= 7) {
@@ -760,7 +761,7 @@ public class ChessBoard extends JPanel {
                 }
             }
             if (followBoard.getSoldiers()[row][column] != null) {
-                if (king.getSoldierColor().equals(Color_Black_Or_White.WHITE)) {
+                if (color_black_or_white.equals(Color_Black_Or_White.WHITE)) {
                     if (followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.BLACK_BISHOP)
                             || followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.BLACK_QUEEN)
                             || followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.BLACK_ROOK)) {
