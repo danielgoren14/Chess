@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Knight extends Soldier implements AvailableSquaresToGoTo {
@@ -23,6 +24,8 @@ public class Knight extends Soldier implements AvailableSquaresToGoTo {
 
         squares.add(this.getTwoLeft_OneDown());
         squares.add(this.getTwoLeft_OneUp());
+        squares.removeAll(Collections.singleton(null));
+        super.removeOpponentKingSquareFromAvailableSquares(squares);
         return squares;
     }
 

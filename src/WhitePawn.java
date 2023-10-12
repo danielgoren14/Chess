@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class WhitePawn extends Soldier implements AvailableSquaresToGoTo {
@@ -27,7 +28,8 @@ public class WhitePawn extends Soldier implements AvailableSquaresToGoTo {
         result.add(this.getTwoToward());
         result.add(this.eatLeftUp());
         result.add(this.eatRightUp());
-
+        result.removeAll(Collections.singleton(null));
+        super.removeOpponentKingSquareFromAvailableSquares(result);
         return result;
     }
 

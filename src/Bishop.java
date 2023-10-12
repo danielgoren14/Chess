@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Bishop extends Soldier implements AvailableSquaresToGoTo{
@@ -20,6 +21,8 @@ public class Bishop extends Soldier implements AvailableSquaresToGoTo{
         result.addAll(this.checkLeftUpDiagonal());
         result.addAll(this.checkRightDownDiagonal());
         result.addAll(this.checkLeftDownDiagonal());
+        result.removeAll(Collections.singleton(null));
+        super.removeOpponentKingSquareFromAvailableSquares(result);
         return result;
     }
 
@@ -39,7 +42,7 @@ public class Bishop extends Soldier implements AvailableSquaresToGoTo{
                     column--;
                 }
             }
-            this.addASquare(squares,row,column,this);
+            super.addASquare(squares,row,column,this);
 //            currentSquare = new Square(row,column);
 //            Square square = canEatSoldier(currentSquare, this.color);
 //            if (square != null) {
@@ -66,7 +69,7 @@ public class Bishop extends Soldier implements AvailableSquaresToGoTo{
                     column--;
                 }
             }
-            this.addASquare(squares,row,column,this);
+            super.addASquare(squares,row,column,this);
 //            currentSquare = new Square(row,column);
 //            Square square = canEatSoldier(currentSquare, this.color);
 //            if (square != null) {
@@ -92,7 +95,7 @@ public class Bishop extends Soldier implements AvailableSquaresToGoTo{
                     column++;
                 }
             }
-            this.addASquare(squares,row,column,this);
+            super.addASquare(squares,row,column,this);
         }
 
         return squares;
@@ -122,7 +125,7 @@ public class Bishop extends Soldier implements AvailableSquaresToGoTo{
                     column++;
                 }
             }
-            this.addASquare(squares,row,column,this);
+            super.addASquare(squares,row,column,this);
 //            currentSquare = new Square(row,column);
 //            Square square = canEatSoldier(currentSquare, this.color);
 //            if (square != null) {

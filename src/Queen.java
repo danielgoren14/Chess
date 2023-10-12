@@ -24,6 +24,7 @@ public class Queen extends Soldier implements AvailableSquaresToGoTo {
         List<Square> squares = new ArrayList<>();
         squares.addAll(rook.getAvailableSquaresToGoTo());
         squares.addAll(bishop.getAvailableSquaresToGoTo());
+        super.removeOpponentKingSquareFromAvailableSquares(squares);
         return squares;
     }
 

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Rook extends Soldier implements AvailableSquaresToGoTo{
@@ -16,6 +17,8 @@ public class Rook extends Soldier implements AvailableSquaresToGoTo{
         result.addAll(this.up());
         result.addAll(this.left());
         result.addAll(this.down());
+        result.removeAll(Collections.singleton(null));
+        super.removeOpponentKingSquareFromAvailableSquares(result);
         return result;
     }
 
@@ -34,7 +37,7 @@ public class Rook extends Soldier implements AvailableSquaresToGoTo{
                     row++;
                 }
             }
-            this.addASquare(squares,row,column,this);
+            super.addASquare(squares,row,column,this);
 //            currentSquare = new Square(row,column);
 //            Square square = getSquareWithSoldier_IfBelongsToOtherColor(currentSquare);
 //            if (square != null) {
@@ -59,7 +62,7 @@ public class Rook extends Soldier implements AvailableSquaresToGoTo{
                     row--;
                 }
             }
-            this.addASquare(squares,row,column,this);
+            super.addASquare(squares,row,column,this);
 //            currentSquare = new Square(row,column);
 //            Square square = getSquareWithSoldier_IfBelongsToOtherColor(currentSquare);
 //            if (square != null) {
@@ -84,7 +87,7 @@ public class Rook extends Soldier implements AvailableSquaresToGoTo{
                     column--;
                 }
             }
-            this.addASquare(squares,row,column,this);
+            super.addASquare(squares,row,column,this);
 //            currentSquare = new Square(row,column);
 //            Square square = getSquareWithSoldier_IfBelongsToOtherColor(currentSquare);
 //            if (square != null) {
@@ -109,7 +112,7 @@ public class Rook extends Soldier implements AvailableSquaresToGoTo{
                     column++;
                 }
             }
-            this.addASquare(squares,row,column,this);
+            super.addASquare(squares,row,column,this);
 //            currentSquare = new Square(row,column);
 //            Square square = getSquareWithSoldier_IfBelongsToOtherColor(currentSquare);
 //            if (square != null) {

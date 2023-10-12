@@ -1,10 +1,12 @@
-import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class BlackPawn extends Soldier implements AvailableSquaresToGoTo {
 //    private boolean[] isJumpedTwice = new boolean[8];
 
+//    private boolean[] alreadyMoved = new boolean[8];
+//    private Square[] currentSquares = new Square[8];
     private Color_Black_Or_White color;
     private boolean alreadyMoved;
 
@@ -62,6 +64,12 @@ public class BlackPawn extends Soldier implements AvailableSquaresToGoTo {
 //        return result;
 //    }
     public List<Square> getAvailableSquaresToGoTo () {
+//        if (this.currentSquares[super.getSquare().getRow()] != null) {
+//            this.currentSquares[super.getSquare().getRow()] = super.getSquare();
+//            this.alreadyMoved[super.getSquare().getColumn()] = true;
+//        } else {
+//            this.alreadyMoved[super.getSquare().getColumn()] = false;
+//        }
         if (super.getSquare().getRow() > 1) {
             this.alreadyMoved = true;
         } else {
@@ -72,8 +80,8 @@ public class BlackPawn extends Soldier implements AvailableSquaresToGoTo {
         result.add(this.getTwoDown());
         result.add(this.eatLeftDown());
         result.add(this.eatRightDown());
-
-
+        result.removeAll(Collections.singleton(null));
+        super.removeOpponentKingSquareFromAvailableSquares(result);
         return result;
     }
 
