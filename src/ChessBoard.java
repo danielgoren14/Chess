@@ -1,9 +1,7 @@
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -210,6 +208,16 @@ public class ChessBoard extends JPanel {
             currentClickedSoldier_IfSoldierExists = followBoard.getSoldiers()[currentSquare.getRow()][currentSquare.getColumn()];
         }
         if (this.soldierClickedOnce) {
+//            Soldier whiteKing = followBoard.getSoldiers()[searchForWhiteKingSquare().getRow()][searchForWhiteKingSquare().getColumn()];
+//            Soldier getRightUpThreateningOpponentSoldierOnWhiteKing = getRightUpThreateningOpponentSoldier(whiteKing);
+//            if (getRightUpThreateningOpponentSoldierOnWhiteKing != null) {
+//                System.out.println("Threatening soldier on black king "+getRightUpThreateningOpponentSoldierOnWhiteKing.toString());
+//            }
+//            Soldier blackKing = followBoard.getSoldiers()[searchForBlackKingSquare().getRow()][searchForBlackKingSquare().getColumn()];
+//            Soldier getRightUpThreateningOpponentSoldierOnBlackKing = getRightUpThreateningOpponentSoldier(blackKing);
+//            if (getRightUpThreateningOpponentSoldierOnBlackKing != null) {
+//                System.out.println("Threatening soldier on white king "+getRightUpThreateningOpponentSoldierOnBlackKing.toString());
+//            }
             Square castlingSquare = null;
             boolean toContinue = true;
 //            List<Square> availableSquares = Soldier.filterNullSquares(lastSoldier.getAvailableSquaresToGoTo());
@@ -241,6 +249,7 @@ public class ChessBoard extends JPanel {
                         toContinue = false;
                     }
                 }
+                System.out.println();
                 if (this.canDoBigCastling(this.lastSoldier)) {
                     castlingSquare = new Square(this.lastSoldier.getSquare().getRow(), this.lastSoldier.getSquare().getColumn() - 2);
                     if (currentSquare.getRow() == this.lastSoldier.getSquare().getRow() && currentSquare.getColumn() == this.lastSoldier.getSquare().getColumn() - 2) {
@@ -353,8 +362,8 @@ public class ChessBoard extends JPanel {
                         lastSoldier.getSquare().setRow(currentSquare.getRow());
                         lastSoldier.getSquare().setColumn(currentSquare.getColumn());
                         followBoard.setSoldiers(lastSoldier, currentSquare.getRow(), currentSquare.getColumn());
-                        System.out.println(followBoard.getSoldiers()[currentSquare.getRow()][currentSquare.getColumn()]);
-                        System.out.println(followBoard.getSoldiers()[lastSoldier.getSquare().getRow()][lastSoldier.getSquare().getColumn()]);
+//                        System.out.println(followBoard.getSoldiers()[currentSquare.getRow()][currentSquare.getColumn()]);
+//                        System.out.println(followBoard.getSoldiers()[lastSoldier.getSquare().getRow()][lastSoldier.getSquare().getColumn()]);
                         this.passOnAllTheSquaresAndLighteningOrReturnThemBack(availableSquares, false);
                         if (this.lastSoldier.getName().equals(SoldiersNames.WHITE_KING) || this.lastSoldier.getName().equals(SoldiersNames.BLACK_KING)) {
                             if (this.lastSoldier.getSoldierColor().equals(Color_Black_Or_White.BLACK)) {
@@ -379,6 +388,25 @@ public class ChessBoard extends JPanel {
             } else {
                 this.returnTheColorBack(this.chessBoard[currentSquare.getRow()][currentSquare.getColumn()]);
             }
+
+            Soldier whiteKing = followBoard.getSoldiers()[searchForWhiteKingSquare().getRow()][searchForWhiteKingSquare().getColumn()];
+            List<Soldier> threateningSoldiers_OnWhiteKing = this.getThreateningSoldiers(whiteKing);
+//            System.out.println(threateningSoldiers_OnWhiteKing);
+            for (Soldier soldier : threateningSoldiers_OnWhiteKing) {
+                if (soldier != null) {
+                    System.out.println(soldier.toString());
+                }
+            }
+            Soldier blackKing = followBoard.getSoldiers()[searchForBlackKingSquare().getRow()][searchForBlackKingSquare().getColumn()];
+            List<Soldier> threateningSoldiers_OnBlackKing = this.getThreateningSoldiers(blackKing);
+            for (Soldier soldier : threateningSoldiers_OnBlackKing) {
+                if (soldier != null) {
+                    System.out.println(soldier.toString());
+                }
+            }
+
+
+
         } else {
             if (currentClickedSoldier_IfSoldierExists != null) {
                 if ((isTurnOfWhite && currentClickedSoldier_IfSoldierExists.getSoldierColor().equals(Color_Black_Or_White.WHITE) ||
@@ -400,7 +428,7 @@ public class ChessBoard extends JPanel {
                     } else {
                         isTurnOfWhite = true;
                     }
-                    System.out.println(currentClickedSoldier_IfSoldierExists);
+//                    System.out.println(currentClickedSoldier_IfSoldierExists);
                     this.lastSoldier = currentClickedSoldier_IfSoldierExists;
                     this.currentBeatingSquare = this.getBeatingSquare(currentClickedSoldier_IfSoldierExists);
                     if (this.currentBeatingSquare != null) {
@@ -701,34 +729,116 @@ public class ChessBoard extends JPanel {
         }
     }
 
+//    public Soldier getLeftDownThreateningOpponentSoldier (Soldier king) {
+//
+//    }
+
+    public List<Soldier> getThreateningSoldiers (Soldier king) {
+        List<Soldier> threateningSoldiers = new ArrayList<>();
+        threateningSoldiers.add(this.getCurrentThreateningByNavigation(king,1,0));
+        threateningSoldiers.add(this.getCurrentThreateningByNavigation(king,-1,0));
+        threateningSoldiers.add(this.getCurrentThreateningByNavigation(king,1,1));
+        threateningSoldiers.add(this.getCurrentThreateningByNavigation(king,-1,1));
+        threateningSoldiers.add(this.getCurrentThreateningByNavigation(king,0,1));
+        threateningSoldiers.add(this.getCurrentThreateningByNavigation(king,0,-1));
+        threateningSoldiers.add(this.getCurrentThreateningByNavigation(king,-1,-1));
+        threateningSoldiers.add(this.getCurrentThreateningByNavigation(king,1,-1));
+        return threateningSoldiers;
+    }
+
+    public Soldier getCurrentThreateningByNavigation(Soldier king, int vertical, int horizontal) {
+        Soldier soldier = null;
+        int row = king.getSquare().getRow() + horizontal;
+        int column = king.getSquare().getColumn() + vertical;
+        if (row >= 0 && row <= 7 && column >= 0 && column <= 7) {
+            while (followBoard.getSoldiers()[row][column] == null) {
+                if (row > 0 && row < 7 && column < 7 && column > 0) {
+                    row += horizontal;
+                    column += vertical;
+                } else {
+                    break;
+                }
+            }
+            if (followBoard.getSoldiers()[row][column] != null) {
+                if (king.getSoldierColor().equals(Color_Black_Or_White.WHITE)) {
+                    if (followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.BLACK_BISHOP)
+                            || followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.BLACK_QUEEN)
+                            || followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.BLACK_ROOK)) {
+                        soldier = followBoard.getSoldiers()[row][column];
+                    }
+                } else {
+                    if (followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.WHITE_BISHOP)
+                            || followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.WHITE_QUEEN)
+                            || followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.WHITE_ROOK)) {
+                        soldier = followBoard.getSoldiers()[row][column];
+                    }
+                }
+            }
+        }
+
+        return soldier;
+
+    }
+
+    public Soldier getLeftUpThreateningOpponentSoldier (Soldier king) {
+        Soldier soldier = null;
+        int row = king.getSquare().getRow() - 1;
+        int column = king.getSquare().getColumn() - 1;
+        if (row >= 0 && column <= 7) {
+            while (followBoard.getSoldiers()[row][column] == null) {
+                if (row > 0 && column > 0) {
+                    row--;
+                    column--;
+                } else {
+                    break;
+                }
+            }
+            if (followBoard.getSoldiers()[row][column] != null) {
+                if (king.getSoldierColor().equals(Color_Black_Or_White.WHITE)) {
+                    if (followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.BLACK_BISHOP)
+                            || followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.BLACK_QUEEN)
+                            || followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.BLACK_ROOK)) {
+                        soldier = followBoard.getSoldiers()[row][column];
+                    }
+                } else {
+                    if (followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.WHITE_BISHOP)
+                            || followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.WHITE_QUEEN)
+                            || followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.WHITE_ROOK)) {
+                        soldier = followBoard.getSoldiers()[row][column];
+                    }
+                }
+            }
+        }
+        return soldier;
+    }
+
     public Soldier getRightUpThreateningOpponentSoldier (Soldier king) {
         Soldier soldier = null;
         int row = king.getSquare().getRow() - 1;
         int column = king.getSquare().getColumn() + 1;
-        while (followBoard.getSoldiers()[row][column] == null) {
-            if (king.getSoldierColor().equals(Color_Black_Or_White.WHITE)) {
-                if (followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.BLACK_BISHOP)
-                        || followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.BLACK_QUEEN)
-                        || followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.BLACK_ROOK)) {
-                    soldier = followBoard.getSoldiers()[row][column];
-                }
-            } else {
-                if (followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.WHITE_BISHOP)
-                        || followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.BLACK_BISHOP)
-                        || followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.WHITE_QUEEN)
-                        || followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.WHITE_ROOK)) {
-                    soldier = followBoard.getSoldiers()[row][column];
-
+        if (row >= 0 && column <= 7) {
+            while (followBoard.getSoldiers()[row][column] == null) {
+                if (row > 0 && column < 7) {
+                    row--;
+                    column++;
+                } else {
+                    break;
                 }
             }
-            if (followBoard.getSoldiers()[row][column] != null && soldier == null) {
-                break;
-            }
-            if (row > 0 && column < 7) {
-                row--;
-                column++;
-            } else {
-                break;
+            if (followBoard.getSoldiers()[row][column] != null) {
+                if (king.getSoldierColor().equals(Color_Black_Or_White.WHITE)) {
+                    if (followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.BLACK_BISHOP)
+                            || followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.BLACK_QUEEN)
+                            || followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.BLACK_ROOK)) {
+                        soldier = followBoard.getSoldiers()[row][column];
+                    }
+                } else {
+                    if (followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.WHITE_BISHOP)
+                            || followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.WHITE_QUEEN)
+                            || followBoard.getSoldiers()[row][column].getName().equals(SoldiersNames.WHITE_ROOK)) {
+                        soldier = followBoard.getSoldiers()[row][column];
+                    }
+                }
             }
         }
         return soldier;
