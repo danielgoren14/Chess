@@ -47,7 +47,7 @@ public class FollowBoard {
 //        soldiers[4][4] = new Bishop(new Square(4,4), SoldiersNames.BLACK_BISHOP);
     }
 
-    public void setSoldiers (Soldier soldier, int row, int column) {
+    public static void setSoldiers(Soldier soldier, int row, int column) {
         soldiers[row][column] = soldier;
     }
 
