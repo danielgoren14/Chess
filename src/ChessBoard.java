@@ -14,18 +14,18 @@ public class ChessBoard extends JPanel {
     private boolean isTurnOfWhite;
     private Soldier lastSoldier;
     private boolean soldierClickedOnce;
-    private final ImageIcon BLACK_PAWN_ICON = Utils.upscaleImage("src/ObjectPhotos/BlackPawn.png", 30, 30);
-    private final ImageIcon WHITE_PAWN_ICON = Utils.upscaleImage("src/ObjectPhotos/WhitePawn.png", 30, 30);
-    private final ImageIcon BLACK_ROOK_ICON = Utils.upscaleImage("src/ObjectPhotos/BlackRook.png", 30, 30);
-    private final ImageIcon WHITE_ROOK_ICON = Utils.upscaleImage("src/ObjectPhotos/WhiteRook.png", 30, 30);
-    private final ImageIcon BLACK_KNIGHT_ICON = Utils.upscaleImage("src/ObjectPhotos/BlackKnight.png", 30, 30);
-    private final ImageIcon BLACK_BISHOP_ICON = Utils.upscaleImage("src/ObjectPhotos/BlackBishop.png", 30, 30);
-    private final ImageIcon BLACK_QUEEN_ICON = Utils.upscaleImage("src/ObjectPhotos/BlackQueen.png", 30, 30);
-    private final ImageIcon BLACK_KING_ICON = Utils.upscaleImage("src/ObjectPhotos/BlackKing.png", 30, 30);
-    private final ImageIcon WHITE_KNIGHT_ICON = Utils.upscaleImage("src/ObjectPhotos/WhiteKnight.png", 30, 30);
-    private final ImageIcon WHITE_BISHOP_ICON = Utils.upscaleImage("src/ObjectPhotos/WhiteBishop.png", 30, 30);
-    private final ImageIcon WHITE_QUEEN_ICON = Utils.upscaleImage("src/ObjectPhotos/WhiteQueen.png", 30, 30);
-    private final ImageIcon WHITE_KING_ICON = Utils.upscaleImage("src/ObjectPhotos/WhiteKing.png", 30, 30);
+    public static final ImageIcon BLACK_PAWN_ICON = Utils.upscaleImage("src/ObjectPhotos/BlackPawn.png", 30, 30);
+    public static final ImageIcon WHITE_PAWN_ICON = Utils.upscaleImage("src/ObjectPhotos/WhitePawn.png", 30, 30);
+    public static final ImageIcon BLACK_ROOK_ICON = Utils.upscaleImage("src/ObjectPhotos/BlackRook.png", 30, 30);
+    public static final ImageIcon WHITE_ROOK_ICON = Utils.upscaleImage("src/ObjectPhotos/WhiteRook.png", 30, 30);
+    public static final ImageIcon BLACK_KNIGHT_ICON = Utils.upscaleImage("src/ObjectPhotos/BlackKnight.png", 30, 30);
+    public static final ImageIcon BLACK_BISHOP_ICON = Utils.upscaleImage("src/ObjectPhotos/BlackBishop.png", 30, 30);
+    public static final ImageIcon BLACK_QUEEN_ICON = Utils.upscaleImage("src/ObjectPhotos/BlackQueen.png", 30, 30);
+    public static final ImageIcon BLACK_KING_ICON = Utils.upscaleImage("src/ObjectPhotos/BlackKing.png", 30, 30);
+    public static final ImageIcon WHITE_KNIGHT_ICON = Utils.upscaleImage("src/ObjectPhotos/WhiteKnight.png", 30, 30);
+    public static final ImageIcon WHITE_BISHOP_ICON = Utils.upscaleImage("src/ObjectPhotos/WhiteBishop.png", 30, 30);
+    public static final ImageIcon WHITE_QUEEN_ICON = Utils.upscaleImage("src/ObjectPhotos/WhiteQueen.png", 30, 30);
+    public static final ImageIcon WHITE_KING_ICON = Utils.upscaleImage("src/ObjectPhotos/WhiteKing.png", 30, 30);
 //    private FollowBoard followBoard;
     private JButton[][] chessBoard = new JButton[8][8];
     public ChessBoard() {
@@ -81,7 +81,6 @@ public class ChessBoard extends JPanel {
         chessBoard[0][7].setIcon(BLACK_ROOK_ICON);
         for (int j = 0; j < 8; j++) {
             chessBoard[6][j].setIcon(WHITE_PAWN_ICON);
-
             chessBoard[1][j].setIcon(BLACK_PAWN_ICON);
         }
 
@@ -136,7 +135,7 @@ public class ChessBoard extends JPanel {
                         toContinue = false;
                     }
                 }
-                System.out.println();
+//                System.out.println();
                 if (this.canDoBigCastling(this.lastSoldier)) {
                     castlingSquare = new Square(this.lastSoldier.getSquare().getRow(), this.lastSoldier.getSquare().getColumn() - 2);
                     if (currentSquare.getRow() == this.lastSoldier.getSquare().getRow() && currentSquare.getColumn() == this.lastSoldier.getSquare().getColumn() - 2) {
@@ -156,24 +155,8 @@ public class ChessBoard extends JPanel {
             }
             if (!availableSquares.contains(null)) {
                 Color_Black_Or_White colorBlackOrWhite = Color_Black_Or_White.WHITE;
-                if (currentClickedSoldier_IfSoldierExists != null) {
-//                    if (lastSoldier.getName().equals(SoldiersNames.BLACK_ROOK) || lastSoldier.getName().equals(SoldiersNames.WHITE_ROOK)
-//                            || lastSoldier.getName().equals(SoldiersNames.BLACK_BISHOP) || lastSoldier.getName().equals(SoldiersNames.WHITE_BISHOP) ||
-//                            lastSoldier.getName().equals(SoldiersNames.BLACK_QUEEN) || lastSoldier.getName().equals(SoldiersNames.WHITE_QUEEN)) {
-//                        if (lastSoldier.getSoldierColor().equals(Color_Black_Or_White.BLACK)) {
-//                            colorBlackOrWhite = Color_Black_Or_White.BLACK;
-//                        }
-//                        List<Square> temp = new ArrayList<>();
-//                        for (Square square : availableSquares) {
-//                            if (!this.isFromTheSameColor(colorBlackOrWhite,this.lastSoldier)) {
-//                                temp.add(square);
-//                            }
-//                        }
-//                        if (temp.size() > 0) {
-//                            availableSquares.removeAll(temp);
-//                        }
-//                    }
-                }
+//                if (currentClickedSoldier_IfSoldierExists != null) {
+//                }
 
                 boolean isSquareToMoveTheSoldierTo_TheUserClicksOn = false;
 
@@ -218,6 +201,26 @@ public class ChessBoard extends JPanel {
                         lastSoldier.getSquare().setRow(currentSquare.getRow());
                         lastSoldier.getSquare().setColumn(currentSquare.getColumn());
                         FollowBoard.setSoldiers(lastSoldier, currentSquare.getRow(), currentSquare.getColumn());
+//                        Soldier chosenSoldier;
+//                        Soldier newSoldier = null;
+//                        if (this.isWhitePawnCameToTheLastRow(this.lastSoldier) || this.isBlackPawnCameToTheLastRow(lastSoldier)) {
+//                            ChoosingSoldier choosingSoldier = new ChoosingSoldier(this.lastSoldier);
+//                            JFrame frame = new JFrame();
+//                            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                            frame.setSize(400, 50);
+//                            JPanel panel = new JPanel();
+//                            frame.add(panel);
+//                            frame.add(choosingSoldier);
+//                            newSoldier = getChosenSoldier(this.lastSoldier);
+//                        }
+////                        if () {
+////                            choosingSoldier = new ChoosingSoldier(this.lastSoldier);
+////                            newSoldier = getChosenSoldier (this.lastSoldier);
+////                        }
+//
+//                        if (newSoldier != null) {
+//                            FollowBoard.setSoldiers(newSoldier, currentSquare.getRow(), currentSquare.getColumn());
+//                        }
 //                        System.out.println(followBoard.getSoldiers()[currentSquare.getRow()][currentSquare.getColumn()]);
 //                        System.out.println(followBoard.getSoldiers()[lastSoldier.getSquare().getRow()][lastSoldier.getSquare().getColumn()]);
                         this.passOnAllTheSquaresAndLighteningOrReturnThemBack(availableSquares, false);
@@ -324,6 +327,34 @@ public class ChessBoard extends JPanel {
         }
     }
 
+    public boolean isBlackPawnCameToTheLastRow (Soldier currentPawn) {
+        boolean result = false;
+        if (currentPawn.getName().equals(SoldiersNames.BLACK_PAWN)) {
+            if (currentPawn.getSquare().getRow() == 7) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    public Soldier getChosenSoldier (Soldier currentPawn) {
+        Soldier chosenSoldier = null;
+        if (isWhitePawnCameToTheLastRow(currentPawn) || isBlackPawnCameToTheLastRow(currentPawn)) {
+            ChoosingSoldier choose = new ChoosingSoldier(currentPawn);
+            chosenSoldier = choose.getNewSoldier();
+        }
+        return chosenSoldier;
+    }
+
+    public boolean isWhitePawnCameToTheLastRow(Soldier currentPawn) {
+        boolean result = false;
+        if (currentPawn.getName().equals(SoldiersNames.WHITE_PAWN)) {
+            if (currentPawn.getSquare().getRow() == 0) {
+                result = true;
+            }
+        }
+        return result;
+    }
 
     private List<Square> getThreateningSquaresTheKingCanMoveTo () {
         List<Square> result = new ArrayList<>();
@@ -346,6 +377,7 @@ public class ChessBoard extends JPanel {
 
         return squaresSoldierCanMove;
     }
+
 
 //    private List<Square> getThreateningTrackSquaresOfSoldiersOnKing (Square square,Color_Black_Or_White color_black_or_white) {
 //        List<Soldier> threateningSoldiersOnWhiteKing = this.getThreateningSoldiers(square,color_black_or_white);
