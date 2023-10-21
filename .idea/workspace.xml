@@ -5,9 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="afe48f59-1e27-40c3-9ac8-aab3a1988017" name="Changes" comment=".">
-      <change afterPath="$PROJECT_DIR$/src/ChoosingSoldier.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Bishop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Bishop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BlackPawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BlackPawn.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ChessBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChessBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ChoosingSoldier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChoosingSoldier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Color_Black_Or_White.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/COLOR_BLACK_OR_WHITE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FollowBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FollowBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/King.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Knight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Knight.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Queen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Queen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Rook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Rook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Soldier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Soldier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SoldiersNames.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SOLDIERS_NAMES.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TurnInformation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TurnInformation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WhitePawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WhitePawn.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,6 +121,19 @@
       <workItem from="1697350060781" duration="1046000" />
       <workItem from="1697365371506" duration="2737000" />
       <workItem from="1697368140534" duration="2000" />
+      <workItem from="1697368154880" duration="106000" />
+      <workItem from="1697380049961" duration="4189000" />
+      <workItem from="1697403247974" duration="4357000" />
+      <workItem from="1697484311230" duration="14000" />
+      <workItem from="1697488736545" duration="2886000" />
+      <workItem from="1697530912557" duration="2240000" />
+      <workItem from="1697554626753" duration="89000" />
+      <workItem from="1697568155303" duration="653000" />
+      <workItem from="1697588503936" duration="745000" />
+      <workItem from="1697626406260" duration="217000" />
+      <workItem from="1697747560017" duration="781000" />
+      <workItem from="1697914281820" duration="178000" />
+      <workItem from="1697924533614" duration="207000" />
     </task>
     <task id="LOCAL‎-00001" summary=".">
       <created>1696954812178</created>
@@ -164,7 +191,14 @@
       <option name="project" value="LOCAL‎" />
       <updated>1697210928644</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL‎-00009" summary=".">
+      <created>1697368214874</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL‎-00009" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1697368214874</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -196,11 +230,6 @@
           <line>66</line>
           <option name="timeStamp" value="67" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/ChessBoard.java</url>
-          <line>155</line>
-          <option name="timeStamp" value="71" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/BlackPawn.java</url>
           <line>120</line>
@@ -218,6 +247,15 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="68" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/Rook.java</url>
+          <line>28</line>
+          <properties class="Rook" method="getSquaresByNavigation">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="77" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

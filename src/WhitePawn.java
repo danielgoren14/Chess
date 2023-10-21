@@ -4,10 +4,10 @@ import java.util.List;
 
 public class WhitePawn extends Soldier implements AvailableSquaresToGoTo {
 //    private boolean[] isJumpedTwice = new boolean[8];
-    private Color_Black_Or_White color;
+    private COLOR_BLACK_OR_WHITE color;
     private boolean alreadyMoved;
 
-    public WhitePawn (Square square, SoldiersNames soldierName) {
+    public WhitePawn (Square square, SOLDIERS_NAMES soldierName) {
         super(square, soldierName);
 
 

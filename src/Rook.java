@@ -4,123 +4,147 @@ import java.util.List;
 
 public class Rook extends Soldier implements AvailableSquaresToGoTo{
     public static final String CURRENT_SOLDIER_NAME = "ROOK";
-    private Color_Black_Or_White color;
+    private COLOR_BLACK_OR_WHITE color;
 
-    public Rook (Square square, SoldiersNames soldierName) {
+    public Rook (Square square, SOLDIERS_NAMES soldierName) {
         super(square, soldierName);
         this.color = super.getSoldierColor();
     }
 
     public List<Square> getAvailableSquaresToGoTo () {
         List<Square> result = new ArrayList<>();
-        result.addAll(this.right());
-        result.addAll(this.up());
-        result.addAll(this.left());
-        result.addAll(this.down());
+//        result.addAll(this.right());
+//        result.addAll(this.up());
+//        result.addAll(this.left());
+//        result.addAll(this.down());
+        result.addAll(this.getSquaresByNavigation(1,0));
+        result.addAll(this.getSquaresByNavigation(0,1));
+        result.addAll(this.getSquaresByNavigation(-1,0));
+        result.addAll(this.getSquaresByNavigation(0,-1));
         result.removeAll(Collections.singleton(null));
         super.removeOpponentKingSquareFromAvailableSquares(result);
         return result;
     }
 
-    public List<Square> down () {
+    public List<Square> getSquaresByNavigation (int vertical, int horizontal) {
         List<Square> squares = new ArrayList<>();
-        int row = super.getSquare().getRow() + 1;
-        int column = super.getSquare().getColumn();
+        int row = super.getSquare().getRow() + vertical;
+        int column = super.getSquare().getColumn() + horizontal;
         Square currentSquare;
-        if (row <= 7) {
+        if (row >= 0 && row <= 7 && column >= 0 && column <= 7) {
             while (currentSoldiers[row][column] == null) {
-                currentSquare = new Square(row,column);
+                currentSquare = new Square(row, column);
                 squares.add(currentSquare);
-                if (row == 7) {
+                row += vertical;
+                column += horizontal;
+                if (row < 0 || row > 7 || column < 0 || column > 7) {
                     break;
-                } else {
-                    row++;
                 }
             }
-            super.addASquare(squares,row,column,this);
-//            currentSquare = new Square(row,column);
-//            Square square = getSquareWithSoldier_IfBelongsToOtherColor(currentSquare);
-//            if (square != null) {
-//                squares.add(square);
-//            }
+            super.addASquare(squares, row, column, this);
         }
         return squares;
     }
 
-    public List<Square> up () {
-        List<Square> squares = new ArrayList<>();
-        int row = super.getSquare().getRow() - 1;
-        int column = super.getSquare().getColumn();
-        Square currentSquare;
-        if (row >= 0) {
-            while (currentSoldiers[row][column] == null) {
-                currentSquare = new Square(row,column);
-                squares.add(currentSquare);
-                if (row == 0) {
-                    break;
-                } else {
-                    row--;
-                }
-            }
-            super.addASquare(squares,row,column,this);
-//            currentSquare = new Square(row,column);
-//            Square square = getSquareWithSoldier_IfBelongsToOtherColor(currentSquare);
-//            if (square != null) {
-//                squares.add(square);
+//    public List<Square> down () {
+//        List<Square> squares = new ArrayList<>();
+//        int row = super.getSquare().getRow() + 1;
+//        int column = super.getSquare().getColumn();
+//        Square currentSquare;
+//        if (row <= 7) {
+//            while (currentSoldiers[row][column] == null) {
+//                currentSquare = new Square(row,column);
+//                squares.add(currentSquare);
+//                if (row == 7) {
+//                    break;
+//                } else {
+//                    row++;
+//                }
 //            }
-        }
-        return squares;
-    }
-
-    public List<Square> left () {
-        List<Square> squares = new ArrayList<>();
-        int row = super.getSquare().getRow();
-        int column = super.getSquare().getColumn() - 1;
-        Square currentSquare;
-        if (column >= 0) {
-            while (currentSoldiers[row][column] == null) {
-                currentSquare = new Square(row,column);
-                squares.add(currentSquare);
-                if (column == 0) {
-                    break;
-                } else {
-                    column--;
-                }
-            }
-            super.addASquare(squares,row,column,this);
-//            currentSquare = new Square(row,column);
-//            Square square = getSquareWithSoldier_IfBelongsToOtherColor(currentSquare);
-//            if (square != null) {
-//                squares.add(square);
+//            super.addASquare(squares,row,column,this);
+////            currentSquare = new Square(row,column);
+////            Square square = getSquareWithSoldier_IfBelongsToOtherColor(currentSquare);
+////            if (square != null) {
+////                squares.add(square);
+////            }
+//        }
+//        return squares;
+//    }
+//
+//    public List<Square> up () {
+//        List<Square> squares = new ArrayList<>();
+//        int row = super.getSquare().getRow() - 1;
+//        int column = super.getSquare().getColumn();
+//        Square currentSquare;
+//        if (row >= 0) {
+//            while (currentSoldiers[row][column] == null) {
+//                currentSquare = new Square(row,column);
+//                squares.add(currentSquare);
+//                if (row == 0) {
+//                    break;
+//                } else {
+//                    row--;
+//                }
 //            }
-        }
-        return squares;
-    }
-
-    public List<Square> right () {
-        List<Square> squares = new ArrayList<>();
-        int row = super.getSquare().getRow();
-        int column = super.getSquare().getColumn() + 1;
-        Square currentSquare;
-        if (column <= 7) {
-            while (currentSoldiers[row][column] == null) {
-                currentSquare = new Square(row,column);
-                squares.add(currentSquare);
-                if (column == 7) {
-                    break;
-                } else {
-                    column++;
-                }
-            }
-            super.addASquare(squares,row,column,this);
-//            currentSquare = new Square(row,column);
-//            Square square = getSquareWithSoldier_IfBelongsToOtherColor(currentSquare);
-//            if (square != null) {
-//                squares.add(square);
+//            super.addASquare(squares,row,column,this);
+////            currentSquare = new Square(row,column);
+////            Square square = getSquareWithSoldier_IfBelongsToOtherColor(currentSquare);
+////            if (square != null) {
+////                squares.add(square);
+////            }
+//        }
+//        return squares;
+//    }
+//
+//    public List<Square> left () {
+//        List<Square> squares = new ArrayList<>();
+//        int row = super.getSquare().getRow();
+//        int column = super.getSquare().getColumn() - 1;
+//        Square currentSquare;
+//        if (column >= 0) {
+//            while (currentSoldiers[row][column] == null) {
+//                currentSquare = new Square(row,column);
+//                squares.add(currentSquare);
+//                if (column == 0) {
+//                    break;
+//                } else {
+//                    column--;
+//                }
 //            }
-        }
-        return squares;
-    }
+//            super.addASquare(squares,row,column,this);
+////            currentSquare = new Square(row,column);
+////            Square square = getSquareWithSoldier_IfBelongsToOtherColor(currentSquare);
+////            if (square != null) {
+////                squares.add(square);
+////            }
+//        }
+//        return squares;
+//    }
+//
+//    public List<Square> right () {
+//        List<Square> squares = new ArrayList<>();
+//        int row = super.getSquare().getRow();
+//        int column = super.getSquare().getColumn() + 1;
+//        Square currentSquare;
+//        if (column <= 7) {
+//            while (currentSoldiers[row][column] == null) {
+//                currentSquare = new Square(row,column);
+//                squares.add(currentSquare);
+//                if (column == 7) {
+//                    break;
+//                } else {
+//                    column++;
+//                }
+//            }
+//            super.addASquare(squares,row,column,this);
+////            currentSquare = new Square(row,column);
+////            Square square = getSquareWithSoldier_IfBelongsToOtherColor(currentSquare);
+////            if (square != null) {
+////                squares.add(square);
+////            }
+//        }
+//        return squares;
+//    }
 
 //    private Square getSquareWithSoldier_IfBelongsToOtherColor (Square square) {
 //        boolean canEat = false;

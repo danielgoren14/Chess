@@ -23,7 +23,7 @@ public class TurnInformation {
         }
         if (this.movingSoldier.getName().toString().contains("KING") && (squareTheSoldierMovesTo.getRow() == this.movingSoldier.getSquare().getRow()
                 && squareTheSoldierMovesTo.getColumn() == this.movingSoldier.getSquare().getColumn() + 2)) {
-            if (this.movingSoldier.getSoldierColor().equals(Color_Black_Or_White.BLACK)) {
+            if (this.movingSoldier.getSoldierColor().equals(COLOR_BLACK_OR_WHITE.BLACK)) {
                 this.isSmallCastlingForBlack = true;
             } else {
                 this.isSmallCastlingForWhite = true;
@@ -31,7 +31,7 @@ public class TurnInformation {
             this.isCastlingHappened = true;
         } else if (this.movingSoldier.getName().toString().contains("KING") && (squareTheSoldierMovesTo.getRow() == this.movingSoldier.getSquare().getRow()
                 && squareTheSoldierMovesTo.getColumn() == this.movingSoldier.getSquare().getColumn() - 2)) {
-            if (this.movingSoldier.getSoldierColor().equals(Color_Black_Or_White.BLACK)) {
+            if (this.movingSoldier.getSoldierColor().equals(COLOR_BLACK_OR_WHITE.BLACK)) {
                 this.isBigCastlingForBlack = true;
             } else {
                 this.isBigCastlingForWhite = true;

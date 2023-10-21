@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Knight extends Soldier implements AvailableSquaresToGoTo {
-    public Knight (Square square, SoldiersNames soldierName) {
+    public Knight (Square square, SOLDIERS_NAMES soldierName) {
         super(square,soldierName);
     }
 

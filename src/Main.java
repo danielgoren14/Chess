@@ -1,6 +1,3 @@
-import javax.swing.*;
-import java.awt.*;
-
 public class Main {
     public static void main(String[] args) {
         new Window();
@@ -17,7 +14,7 @@ public class Main {
 
     }
 
-    public static String filterEnumName (SoldiersNames soldierName) {
+    public static String filterEnumName (SOLDIERS_NAMES soldierName) {
         String result = "";
         String temp = soldierName.toString();
         int index = 0;

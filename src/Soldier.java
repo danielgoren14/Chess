@@ -4,9 +4,9 @@ import java.util.List;
 public class Soldier {
     Soldier[][] currentSoldiers = FollowBoard.getSoldiers();
     private Square square;
-    private SoldiersNames name;
+    private SOLDIERS_NAMES name;
 
-    public Soldier (Square square, SoldiersNames soldierName) {
+    public Soldier (Square square, SOLDIERS_NAMES soldierName) {
 //        this.isWhiteKingAlreadyMoved = false;
 //        this.isBlackKingAlreadyMoved = false;
         this.square = square;
@@ -33,7 +33,7 @@ public class Soldier {
         return square;
     }
 
-    public SoldiersNames getName() {
+    public SOLDIERS_NAMES getName() {
         return name;
     }
 
@@ -75,7 +75,7 @@ public class Soldier {
         }
         return square;
     }
-    public Square canEatSoldier (Square square, Color_Black_Or_White color) {
+    public Square canEatSoldier (Square square, COLOR_BLACK_OR_WHITE color) {
         int row = square.getRow();
         int column = square.getColumn();
         boolean canEat = false;
@@ -141,13 +141,13 @@ public class Soldier {
         Square squareToRemove = null;
         for (Square currentSquare : squares) {
             if (currentSoldiers[currentSquare.getRow()][currentSquare.getColumn()] != null) {
-                if (currentSoldiers[currentSquare.getRow()][currentSquare.getColumn()].getName().equals(SoldiersNames.WHITE_KING)
-                        && soldier.getSoldierColor().equals(Color_Black_Or_White.BLACK)) {
+                if (currentSoldiers[currentSquare.getRow()][currentSquare.getColumn()].getName().equals(SOLDIERS_NAMES.WHITE_KING)
+                        && soldier.getSoldierColor().equals(COLOR_BLACK_OR_WHITE.BLACK)) {
                     squareToRemove = currentSquare;
                     break;
                 }
-                if (currentSoldiers[currentSquare.getRow()][currentSquare.getColumn()].getName().equals(SoldiersNames.BLACK_KING)
-                        && soldier.getSoldierColor().equals(Color_Black_Or_White.WHITE)) {
+                if (currentSoldiers[currentSquare.getRow()][currentSquare.getColumn()].getName().equals(SOLDIERS_NAMES.BLACK_KING)
+                        && soldier.getSoldierColor().equals(COLOR_BLACK_OR_WHITE.WHITE)) {
                     squareToRemove = currentSquare;
                 }
             }
@@ -158,11 +158,11 @@ public class Soldier {
 //        return squares;
     }
 
-    public Color_Black_Or_White getSoldierColor() {
-        Color_Black_Or_White soldierColor = Color_Black_Or_White.WHITE;
+    public COLOR_BLACK_OR_WHITE getSoldierColor() {
+        COLOR_BLACK_OR_WHITE soldierColor = COLOR_BLACK_OR_WHITE.WHITE;
         String colorString = this.getStringColor();
         if (colorString.equals("BLACK")) {
-            soldierColor = Color_Black_Or_White.BLACK;
+            soldierColor = COLOR_BLACK_OR_WHITE.BLACK;
         }
         return soldierColor;
     }

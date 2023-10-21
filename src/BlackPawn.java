@@ -7,10 +7,10 @@ public class BlackPawn extends Soldier implements AvailableSquaresToGoTo {
 
 //    private boolean[] alreadyMoved = new boolean[8];
 //    private Square[] currentSquares = new Square[8];
-    private Color_Black_Or_White color;
+    private COLOR_BLACK_OR_WHITE color;
     private boolean alreadyMoved;
 
-    public BlackPawn (Square square, SoldiersNames soldierName) {
+    public BlackPawn (Square square, SOLDIERS_NAMES soldierName) {
         super(square, soldierName);
 
 

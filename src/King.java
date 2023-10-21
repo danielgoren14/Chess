@@ -3,29 +3,49 @@ import java.util.Collections;
 import java.util.List;
 
 public class King extends Soldier implements AvailableSquaresToGoTo {
-    private Color_Black_Or_White color;
+    private COLOR_BLACK_OR_WHITE color;
     public static final String CURRENT_SOLDIER_NAME =  "KING";
 
-    public King (Square square, SoldiersNames soldierName) {
+    public King (Square square, SOLDIERS_NAMES soldierName) {
         super(square,soldierName);
         this.color = super.getSoldierColor();
     }
 
     public List<Square> getAvailableSquaresToGoTo () {
         List<Square> squares = new ArrayList<>();
-        squares.add(this.getUp());
-        squares.add(this.getDown());
-        squares.add(this.getLeft());
-        squares.add(this.getRight());
-        squares.add(this.getLeftDown());
-        squares.add(this.getLeftUp());
-        squares.add(this.getRightDown());
-        squares.add(this.getRightUp());
+        squares.add(this.getSquareByNavigation(1,1));
+        squares.add(this.getSquareByNavigation(1,0));
+        squares.add(this.getSquareByNavigation(0,1));
+        squares.add(this.getSquareByNavigation(-1,1));
+        squares.add(this.getSquareByNavigation(-1,0));
+        squares.add(this.getSquareByNavigation(-1,-1));
+        squares.add(this.getSquareByNavigation(0,-1));
+        squares.add(this.getSquareByNavigation(1,-1));
+
+
+
+//        squares.add(this.getUp());
+//        squares.add(this.getDown());
+//        squares.add(this.getLeft());
+//        squares.add(this.getRight());
+//        squares.add(this.getLeftDown());
+//        squares.add(this.getLeftUp());
+//        squares.add(this.getRightDown());
+//        squares.add(this.getRightUp());
         squares.removeAll(Collections.singleton(null));
         super.removeOpponentKingSquareFromAvailableSquares(squares);
         return squares;
     }
 
+    public Square getSquareByNavigation (int vertical, int horizontal) {
+        Square square = null;
+        int row = super.getSquare().getRow() + vertical;
+        int column = super.getSquare().getColumn() + horizontal;
+        if (row >= 0 && row <= 7 && column >= 0 && column <= 7) {
+            square = check_Square(row,column);
+        }
+        return square;
+    }
 
     private Square check_Square (int row, int column) {
         Square result;

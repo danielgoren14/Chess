@@ -1,4 +1,4 @@
-public enum SoldiersNames {
+public enum SOLDIERS_NAMES {
     WHITE_PAWN,
     BLACK_PAWN,
     WHITE_ROOK,
