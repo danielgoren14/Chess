@@ -6,22 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="afe48f59-1e27-40c3-9ac8-aab3a1988017" name="Changes" comment=".">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Bishop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Bishop.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BlackPawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BlackPawn.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ChessBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChessBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ChoosingSoldier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChoosingSoldier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Color_Black_Or_White.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/COLOR_BLACK_OR_WHITE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FollowBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FollowBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/King.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/King.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Knight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Knight.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Queen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Queen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Rook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Rook.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Soldier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Soldier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SoldiersNames.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SOLDIERS_NAMES.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TurnInformation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TurnInformation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/WhitePawn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WhitePawn.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +27,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2UCP0uwE3e3HnpDxZvHtYnaPx6V" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -134,6 +122,9 @@
       <workItem from="1697747560017" duration="781000" />
       <workItem from="1697914281820" duration="178000" />
       <workItem from="1697924533614" duration="207000" />
+      <workItem from="1697924770051" duration="38000" />
+      <workItem from="1698054149964" duration="8733000" />
+      <workItem from="1698092841663" duration="1501000" />
     </task>
     <task id="LOCAL‎-00001" summary=".">
       <created>1696954812178</created>
@@ -198,7 +189,14 @@
       <option name="project" value="LOCAL‎" />
       <updated>1697368214874</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL‎-00010" summary=".">
+      <created>1697924793022</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL‎-00010" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1697924793022</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -230,6 +228,11 @@
           <line>66</line>
           <option name="timeStamp" value="67" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/ChessBoard.java</url>
+          <line>148</line>
+          <option name="timeStamp" value="82" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/BlackPawn.java</url>
           <line>120</line>
@@ -238,24 +241,6 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="66" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/WhitePawn.java</url>
-          <line>19</line>
-          <properties class="WhitePawn" method="getAvailableSquaresToGoTo">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="68" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/Rook.java</url>
-          <line>28</line>
-          <properties class="Rook" method="getSquaresByNavigation">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="77" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
