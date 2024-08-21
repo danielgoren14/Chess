@@ -1,0 +1,53 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.http.HttpRequest;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import utils.Utils;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.net.*;
+import java.net.http.HttpClient;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+
+public class Main {
+
+    //Google drive link: https://docs.google.com/document/d/16XKREqqzlJNLWHq5jZIminFVNuhuBTZHqwBKAsZnDFw/edit?usp=sharing
+    private static CloseableHttpClient client = HttpClients.createDefault();
+    public static void main(String[] args) {
+        Utils.saveIdentifyCode();
+        if (Utils.getCreds() != null) {
+            System.out.println(Utils.getCreds());
+            Window window = new Window();
+            // Prepare the POST data
+            String magic = "hBGHbfY";
+            String question = "1";
+            String answer = "1981";
+            URI uri = null;
+            try {
+                uri = new URIBuilder("https://app.seker.live/fm1/answer-file")
+                        .setParameter("magic", magic)
+                        .setParameter("question", question)
+                        .setParameter("answer", answer)
+                        .build();
+                System.out.println("עבד");
+                HttpPost request = new HttpPost(uri);
+
+                CloseableHttpResponse response = client.execute(request);
+
+            }
+            catch (IOException e){
+                throw new RuntimeException(e);
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+
+            // Encode the parameters
+
+        }
+    }
+}
