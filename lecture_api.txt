@@ -1,0 +1,151 @@
+package org.example;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Scanner;
+
+public class Main {
+    private static  CloseableHttpClient client = HttpClients.createDefault();
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("""
+                What do you want to do?
+                1 - Register
+                2 - Get Tasks
+                3 - Add Task
+                4 - Set Task Done
+                """);
+            int choice = new Scanner(System.in).nextInt();
+            switch (choice) {
+                case 1 -> {
+                    System.out.println("Enter ID:");
+                    String id = scanner.nextLine();
+                    register(id);
+                }
+                case 2 -> {
+                    System.out.println("Enter ID:");
+                    String id = scanner.nextLine();
+                    getTasks(id);
+                }
+                case 3 -> {
+                    System.out.println("Enter ID:");
+                    String id = scanner.nextLine();
+                    System.out.println("Enter the task: ");
+                    String task = scanner.nextLine();
+                    addTask(id, task);
+                }
+                case 4 -> {
+                    System.out.println("Enter ID:");
+                    String id = scanner.nextLine();
+                    System.out.println("Enter the task: ");
+                    String task = scanner.nextLine();
+                    setTaskDone(id, task);
+
+                }
+            }
+        }
+    }
+
+    public static void addTask (String id, String text) {
+        try {
+            URI uri = new URIBuilder("https://app.seker.live/fm1/add-task")
+                    .setParameter("id", id)
+                    .setParameter("text", text)
+                    .build();
+            HttpPost request = new HttpPost(uri);
+            CloseableHttpResponse response = client.execute(request);
+            System.out.println(EntityUtils.toString(response.getEntity()));
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static void register (String id) {
+        try {
+            URI uri = new URIBuilder("https://app.seker.live/fm1/register")
+                    .setParameter("id", id)
+                    .build();
+            HttpPost request = new HttpPost(uri);
+            CloseableHttpResponse response = client.execute(request);
+            String myResponse = EntityUtils.toString(response.getEntity());
+            Response responseObject = new ObjectMapper().readValue(myResponse, Response.class);
+            if (responseObject.isSuccess()) {
+                System.out.println("You have successfully registered");
+            } else {
+                if (responseObject.getErrorCode() == 1003) {
+                    System.out.println("You are already in the system");
+                }
+            }
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static void getTasks (String id) {
+        try {
+            URI uri = new URIBuilder("https://app.seker.live/fm1/get-tasks")
+                    .setParameter("id", id)
+                    .build();
+            HttpGet request = new HttpGet(uri);
+            CloseableHttpResponse response = client.execute(request);
+            String myResponse = EntityUtils.toString(response.getEntity());
+            Response responseObject = new ObjectMapper().readValue(myResponse, Response.class);
+            if (responseObject.isSuccess()) {
+                System.out.println("You have " +
+                        responseObject.getTasks()
+                                .stream()
+                                .filter(taskModel -> !taskModel.isDone())
+                                .toList()
+                                .size() + " open tasks!");
+                for (int i = 0; i < responseObject.getTasks().size(); i++) {
+                    System.out.println((i + 1) + ": " +
+                            responseObject.getTasks().get(i).getTitle() + (responseObject.getTasks().get(i).isDone() ? "DONE" : ""));
+                }
+            } else {
+                if (responseObject.getErrorCode() == 1001) {
+                    System.out.println("A user with id "  + id + " has not been registered!");
+                }
+            }
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static void setTaskDone (String id, String text) {
+        try {
+            URI uri = new URIBuilder("https://app.seker.live/fm1/set-task-done")
+                    .setParameter("id", id)
+                    .setParameter("text", text)
+                    .build();
+            HttpPost request = new HttpPost(uri);
+            CloseableHttpResponse response = client.execute(request);
+            System.out.println(EntityUtils.toString(response.getEntity()));
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+}
