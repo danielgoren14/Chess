@@ -1,0 +1,26 @@
+URI uri = null;
+try {
+    uri = new URIBuilder("https://app.seker.live/fm1/answer-file")
+            .setParameter("magic", "magic")
+            .setParameter("question", "2")
+            .setParameter("answer", "1981")
+            .build();
+    System.out.println("עבד");
+    HttpPost request = new HttpPost(uri);
+
+    CloseableHttpResponse response = client.execute(request);
+
+    // Check if the request was successful
+    if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+        // Get the response entity
+        String responseBody = EntityUtils.toString(response.getEntity());
+        // Assuming the response body contains the SUCCESS value, print it
+        System.out.println("SUCCESS value: " + responseBody);
+    } else {
+        System.out.println("Request failed with status code: " + response.getStatusLine().getStatusCode());
+    }
+} catch (IOException e) {
+    throw new RuntimeException(e);
+} catch (URISyntaxException e) {
+    throw new RuntimeException(e);
+}
